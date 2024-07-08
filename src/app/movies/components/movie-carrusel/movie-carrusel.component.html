@@ -1,0 +1,13 @@
+
+<swiper-container [attr.id]="Title"  style="padding: 20px;"
+  [allowSlideNext]="allowSlideNext"
+  [allowSlidePrev]="allowSlidePrev"
+  [breakpoints]="breakpoints"
+  [navigation]="navigation"
+  [loop]="true"
+  [spaceBetween]="spaceBetween">
+  <div slot="container-start"><h1 class="slide_title">{{Title}}</h1></div>
+  <swiper-slide *ngFor="let movie of MovieList">
+    <movie-card  [media]="movie"/>
+  </swiper-slide>
+</swiper-container>

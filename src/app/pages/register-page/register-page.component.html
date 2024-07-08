@@ -1,0 +1,11 @@
+<div class="center" >
+  <h1>Registro nuevo usuario</h1>
+  <form method="post" [formGroup]="RegisterForm" (submit)="RegisterUser()">
+    <form-field  [label]="'Nombre de usuario'"/>
+    <form-field  [label]="'Correo'"/>
+    <form-field  [label]="'Contraseña'" [type]="'password'"/>
+    <form-field  [label]="'Confirmar contraseña'" [type]="'password'"/>
+    <submit-button  [label]="'Registrar'"/>
+    <div class="signup_link">¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesion</a></div>
+  </form>
+</div>

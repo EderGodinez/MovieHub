@@ -1,0 +1,9 @@
+<div class="container"  *ngIf="!Isloading;else loading">
+  <h1>Series</h1>
+  <div class="cards">
+    <movie-card *ngFor="let item of List" [media]="item" style="flex: 1 ;" ></movie-card>
+  </div>
+</div>
+<ng-template #loading>
+  <loadingComponent/>
+</ng-template>

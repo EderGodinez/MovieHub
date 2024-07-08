@@ -1,0 +1,234 @@
+:host ::ng-deep{
+  div.tab-menu-container > p-tabmenu > div > div > div > ul{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+    li.p-tabmenu-ink-bar{
+      display: none;
+    }
+    li{
+
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      a{
+        gap: 10px;
+      }
+    }
+  }
+
+}
+.header_conteiner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  background-color: rgb(57, 62, 70);
+  gap: 10px;
+  flex-wrap: wrap;
+  @media screen and (width<500px){
+    justify-content: space-evenly;
+  }
+}
+.header__logo
+{
+  aspect-ratio: 1;
+  width: 100px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+.search_bar{
+  display: flex;
+  max-width: 1600px;
+  min-width: 250px;
+  position: relative;
+  margin: 0 20px;
+  flex-grow: 1;
+  input{
+    font-family: inherit;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: 0px solid #333;
+    outline: 0px solid #ffffff;
+    font-size: clap(12px,14px,16px);
+    transition: box-shadow 0.1s;
+    &::placeholder{
+      color: #333;
+      font-family: inherit;
+      font-size: clap(12px,14px,16px);
+    }
+    &:active, &:focus{
+      box-shadow: inset 0 0 0 2px #333, 0 0 0 1px #ffffff;
+
+    }
+  }
+
+  @media screen and (width<500px){
+    order: 3;
+    margin-bottom: 20px;
+  }
+}
+.search_icon
+{
+
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+  cursor: pointer;
+}
+.Menu_button{
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  i{
+    transition: color 0.3s;
+    font-size: 2.5rem;
+    color: #797777;
+  }
+  &:hover i{
+    color: #ffffff;
+  }
+}
+.times_button{
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  i{
+    transition: color 0.3s;
+    font-size: 1.5rem;
+    color: #797777;
+  }
+  &:hover{
+    border-radius: 50%;
+    border: 2px solid #797777;
+    i{
+      font-weight: bold;
+      color: black;
+    }
+  }
+}
+.sesion_options{
+  width: 20rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  color: #f1f1f1;
+}
+.sesion_items{
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+.item__user_sesion {
+  text-decoration: underline;
+  margin: 0.5rem;
+  cursor: pointer;
+  color: #333;
+  font-size: 0.875rem;
+}
+
+.item__user_sesion:hover {
+  color: #3182ce;
+}
+.sesion_item__routes{
+display: flex;
+list-style: none;
+flex-direction: column;
+gap: 1.5rem;
+padding: 1rem;
+margin: 0.5rem;
+}
+.sesion_item__route__item{
+  text-decoration: none;
+  color: #f1f1f1;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover{
+    color: #3182ce;
+  }
+}
+nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+  @media screen and (width<500px){
+    justify-content: space-evenly;
+  }
+a{
+  display: flex;
+  gap: 10px;
+  position: relative;
+  text-decoration: none;
+  color: rgb(151, 147, 147);
+  font-size: 1rem;
+  transition: color 0.3s;
+  &:hover{
+    &::after{
+      width: 100%;
+    }
+    color: #3182ce;
+    font-weight: 500;
+  }
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3182ce;
+    transition: width 0.3s;
+  }
+  &.active {
+    color: #3182ce;
+    font-weight: 500;
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+}
+
+.tab-menu-container {
+  .active {
+    color: #3182ce;
+    font-weight: bold;
+  }
+}
+hr{
+  width: 100%;
+  border: 0;
+  height: 1.2px;
+  background-color: #a1a1a1;
+}

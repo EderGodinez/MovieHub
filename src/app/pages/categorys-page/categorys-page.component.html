@@ -1,0 +1,9 @@
+
+<div *ngIf="!Isloading;else loading">
+  <app-movie-carrusel *ngFor="let key of CategoriesKeys"
+  [MovieList]="Categories[key]"
+  [Title]="key"></app-movie-carrusel>
+</div>
+<ng-template #loading>
+  <loadingComponent/>
+</ng-template>

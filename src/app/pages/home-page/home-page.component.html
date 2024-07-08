@@ -1,0 +1,8 @@
+<main *ngIf="!Isloading; else loading">
+  <app-movie-carrusel [MovieList]="Movies" [Title]="'Mejores 2024'"></app-movie-carrusel>
+  <app-movie-carrusel [MovieList]="TrendingMovies" [Title]="'Peliculas trending'"></app-movie-carrusel>
+  <app-movie-carrusel [MovieList]="Series" [Title]="'Series'"></app-movie-carrusel>
+</main>
+<ng-template #loading>
+  <loadingComponent></loadingComponent>
+</ng-template>

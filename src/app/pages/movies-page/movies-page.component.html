@@ -1,0 +1,9 @@
+<div class="container" *ngIf="!Isloading;else loading">
+  <h1>Peliculas</h1>
+  <article class="cards">
+    <movie-card *ngFor="let item of MovieList" [media]="item" ></movie-card>
+  </article>
+</div>
+<ng-template #loading>
+  <loadingComponent/>
+</ng-template>
