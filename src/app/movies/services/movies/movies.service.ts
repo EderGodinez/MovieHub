@@ -52,8 +52,7 @@ get MoviesList(): Observable<Movie[]> {
     const movies:Movie=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
       map((movies:Movie[])=>{
-        const movie=movies.find((movie:Movie)=>movie.id===parseInt(id)&&movie.media_type==='movie')
-        console.log(movie);
+        const movie=movies.find((movie:Movie)=>movie.id===parseInt(id))
         return movie
       })
     ))

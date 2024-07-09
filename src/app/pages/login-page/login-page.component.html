@@ -1,10 +1,17 @@
+<p-toast position="bottom-right" key="bc"></p-toast>
 <div class="center">
-  <h1>Iniciar Sesion</h1>
-  <form method="post">
-    <form-field  [label]="'Correo electronico'"/>
-    <form-field  [label]="'Contraseña'" [type]="'password'"/>
+  <h1 >Iniciar Sesión</h1>
+  <form  [formGroup]="loginForm" (submit)="onSubmit()">
+    <div>
+      <form-field  [label]="'Correo electronico'" formControlName="email" [HasError]="ValidateField('email')" />
+      <small style="color: red;" *ngIf="ValidateField('email')">{{GetFieldErrorMessage('email','correo')}}</small>
+    </div>
+    <div>
+      <form-field  [label]="'Contraseña'" [type]="'password'" formControlName="password" [HasError]="ValidateField('password')"/>
+      <small style="color: red;"*ngIf="ValidateField('password')">{{GetFieldErrorMessage('password')}}</small>
+    </div>
     <div class="pass">Olvidaste la contraseña Password?</div>
-    <submit-button  [label]="'Login'"/>
+    <submit-button  [label]="'Login'"  />
     <div class="signup_link">¿No estas registrado? <a routerLink="/register">Registrate</a></div>
   </form>
 </div>

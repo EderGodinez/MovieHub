@@ -18,6 +18,7 @@ import { MoviesPageComponent } from './pages/movies-page/movies-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { CommonModule } from '@angular/common';
     PrimeNGModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 
 })

@@ -1,3 +1,4 @@
+<h1 *ngIf="!Isloading;else loading" style="margin: 1rem;">Resultados de busqueda "{{query}}"</h1>
 <main class="search__results" *ngIf="!Isloading;else loading">
   <movie-card *ngFor="let media of media_results" [media]="media" style="flex: 1 1 300px;" ></movie-card>
 </main>

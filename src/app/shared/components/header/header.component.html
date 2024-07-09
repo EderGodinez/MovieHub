@@ -5,21 +5,25 @@
     <input type="text" name="search" placeholder="Buscar...." autocomplete="off" (keyup.enter)="SearchMedia()" #searchInput>
     <span class="search_icon"><i class="bi bi-search" style="font-size: 1rem;"></i></span>
   </label>
-  <button  class="Menu_button" (click)="op.toggle($event)"><i class="bi bi-person-fill" [ngStyle]="isUserMenuOpen ? {'color':'#ffffff'} : {'color':'#797777'}" ></i></button>
+
+
+  <button   class="Menu_button" (click)="op.toggle($event)"><i class="bi bi-person-fill" [ngStyle]="isUserMenuOpen ? {'color':'#ffffff'} : {'color':'#797777'}" ></i></button>
   <p-overlayPanel #op (onShow)="isUserMenuOpen=true" (onHide)="isUserMenuOpen=false" [style]="{'background-color':'rbg(236,236,236)','padding':'20px'}">
-    <div class="sesion_options">
-      <div class="sesion_items" *ngIf="!Islogin">
+
+    <div class="sesion_options" >
+      <div class="sesion_items" *ngIf="getUser()===null">
         <a  class="item__user_sesion" (click)="op.toggle($event)" routerLink="login">Iniciar Sesion</a><span style="margin: 0.5rem;">|</span>
         <a  class="item__user_sesion"  (click)="op.toggle($event)" routerLink="register">Registrarte</a>
       </div>
+      <h5 *ngIf="getUser()!==null" style="color: rgb(0, 0, 0); margin: 10px 5px;">Bienvenido {{getUser()?.name|titlecase }}</h5>
       <button  class="times_button" (click)="op.toggle($event)"><i class="bi bi-x"></i></button>
     </div>
-    <hr style="margin: 0;" *ngIf="Islogin">
-    <div style="font-size: 1.5rem;" *ngIf="Islogin">
+    <hr style="margin: 0;" *ngIf="getUser()!==null">
+    <div style="font-size: 1.5rem;" *ngIf="getUser()!==null">
       <ul class="sesion_item__routes">
-        <li *ngFor="let user of OptionsU" class="sesion_item__route__item" style="font-size: 16px;" (click)="op.toggle($event)" routerLink="{{user.url}}">
+        <li *ngFor="let user of OptionsU" class="sesion_item__route__item" style="font-size: 16px;" (click)="user.action()" routerLink="{{user.url}}">
           <i class="{{user.icon}}" style="padding: 1rem;"></i>
-          <p  style="margin:0 0 1rem 1rem;font-size: 1rem;">{{user.label}}</p>
+          <p  style="font-size: 1rem;">{{user.label}}</p>
         </li>
       </ul>
     </div>
@@ -27,14 +31,18 @@
 </div>
 <div class="tab-menu-container">
   <nav>
-    <a *ngFor="let item of items"
-       [routerLink]="item.routerLink"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{exact: true}">
-            <i [class]="item.icon"></i>
-             {{item.label}}
-    </a>
+
+      <a *ngFor="let item of items"
+      [routerLink]="item.routerLink"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}">
+           <i [class]="item.icon"></i>
+            {{item.label}}
+   </a>
+
+
   </nav>
   <hr>
 </div>
+
 

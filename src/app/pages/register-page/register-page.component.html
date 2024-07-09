@@ -1,10 +1,23 @@
+<p-toast></p-toast>
 <div class="center" >
   <h1>Registro nuevo usuario</h1>
   <form method="post" [formGroup]="RegisterForm" (submit)="RegisterUser()">
-    <form-field  [label]="'Nombre de usuario'"/>
-    <form-field  [label]="'Correo'"/>
-    <form-field  [label]="'Contraseña'" [type]="'password'"/>
-    <form-field  [label]="'Confirmar contraseña'" [type]="'password'"/>
+    <div>
+      <form-field  [label]="'Nombre de usuario'" formControlName="Name" [HasError]="ValidateField('Name')"/>
+      <small style="color: red;" *ngIf="ValidateField('Name')">{{GetFieldErrorMessage('Name','Nombre/Apellido')}}</small>
+    </div>
+    <div>
+      <form-field  [label]="'Correo'" formControlName="Email" [HasError]="ValidateField('Email')"/>
+      <small style="color: red;" *ngIf="ValidateField('Email')">{{GetFieldErrorMessage('Email','correo')}}</small>
+    </div>
+    <div>
+      <form-field  [label]="'Contraseña'" [type]="'password'" formControlName="Password" [HasError]="ValidateField('Password')"/>
+      <small style="color: red;" *ngIf="ValidateField('Password')">{{GetFieldErrorMessage('Password')}}</small>
+    </div>
+    <div>
+      <form-field  [label]="'Confirmar contraseña'" [type]="'password'" formControlName="ConfirmPassword" [HasError]="ValidateField('ConfirmPassword')"/>
+      <small style="color: red;" *ngIf="ValidateField('ConfirmPassword')">{{GetFieldErrorMessage('ConfirmPassword')}}</small>
+    </div>
     <submit-button  [label]="'Registrar'"/>
     <div class="signup_link">¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesion</a></div>
   </form>

@@ -1,7 +1,7 @@
 .txt_field {
   position: relative;
   border-bottom: 2px solid #adadad;
-  margin: 30px 0;
+  margin: 30px 0 5px 0;
   input {
     width: 100%;
     padding: 0 5px;
@@ -31,15 +31,31 @@
     background: #2691d9;
     transition: 0.5s;
   }
-   input:focus ~ label,
- input:valid ~ label {
+  :is(input:focus,input:valid)  ~ label{
   top: -5px;
   color: #2691d9;
 }
- input:focus ~ span::before,
-input:valid ~ span::before {
+ :is(input:focus,input:valid ) ~ span::before {
   width: 100%;
 }
+:is(input.error_class:focus,input.error_class:valid) ~ label {
+  top: -5px;
+  color: red;
+}
+:is(input.error_class:focus,input.error_class:valid) ~ span::before {
+  width: 100%;
+  background-color: red;
+}
+}
+input.error_class ~ label {
+  top: -5px;
+  color: red;
+}
+
+// Cuando el input tiene error_class
+input.error_class ~ span::before {
+  width: 100%;
+  background-color: red;
 }
 
 

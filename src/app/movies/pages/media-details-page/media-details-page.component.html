@@ -1,5 +1,7 @@
 
-<img [src]="MediaDitails?.public_image_path" [alt]="MediaDitails?.title" class="public_image">
+<p-toast position="bottom-center" key="tc"></p-toast>
+<div *ngIf="!Isloading;else loading">
+  <img [src]="MediaDitails?.public_image_path" [alt]="MediaDitails?.title" class="public_image">
   <section class="media-details">
     <div style="display: flex;color: aliceblue; gap: 20px; flex-wrap: wrap;">
       <div class="post_container">
@@ -8,8 +10,8 @@
       <div class="descripcion_movie">
         <div>
           <h1>{{MediaDitails?.title}}</h1>
-          <span *ngFor="let item of MediaDitails.genders; let i = index">
-            {{item}}{{i < MediaDitails.genders.length - 1 ? ' - ' : ''}}
+          <span *ngFor="let item of MediaDitails?.genders; let i = index">
+            {{item}}{{i < MediaDitails!.genders.length - 1 ? ' - ' : ''}}
           </span>
           <p>{{MediaDitails?.overview}}</p>
           <p>{{MediaDitails?.release_date}}</p>
@@ -17,13 +19,18 @@
         </div>
 
       <div class="buttons">
-        <p-button icon="bi bi-heart" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
-        <p-button icon="bi bi-eye" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
-        <p-button icon="bi bi-eye-slash" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+        <p-button icon="bi bi-heart" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="AddFavorite()"></p-button>
+        <p-button icon="bi bi-eye" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="ShowMovie()"></p-button>
+        <p-button icon="bi bi-eye-slash" [rounded]="true" severity="secondary" [outlined]="true" (onClick)="hideMedia()"></p-button>
       </div>
       </div>
     </div>
   </section>
   <app-movie-carrusel [MovieList]="MediaRecomendations" [Title]="'Recomendaciones'"></app-movie-carrusel>
+</div>
 
 
+
+  <ng-template #loading>
+    <loadingComponent></loadingComponent>
+  </ng-template>

@@ -17,6 +17,7 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
   ngOnInit(): void {
     this.route.params.subscribe((params)=>{
       const param=params['query'];
+      this.query=param;
       this.searchMedia(param);
     })
 
@@ -26,6 +27,7 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
   }
 media_results :Movie[]= [];
 Isloading = true;
+query:string='';
 
 searchMedia(query:string){
   this.Isloading=true;

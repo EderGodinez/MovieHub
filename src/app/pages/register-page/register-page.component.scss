@@ -45,3 +45,9 @@ border-radius: 0px;
 .signup_link a:hover {
   text-decoration: underline;
 }
+:host ::ng-deep{
+  submit-button input {
+    margin: 20px 0;
+  }
+}
+

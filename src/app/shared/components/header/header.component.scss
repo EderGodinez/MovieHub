@@ -158,13 +158,13 @@
 display: flex;
 list-style: none;
 flex-direction: column;
-gap: 1.5rem;
-padding: 1rem;
-margin: 0.5rem;
 }
 .sesion_item__route__item{
+  display: flex;
+  justify-content: start;
+  align-items: center;
   text-decoration: none;
-  color: #f1f1f1;
+  color: #888686;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s;

@@ -9,6 +9,7 @@ export class AuthButtonComponent {
 @Input() label: string = '';
 @Input() click: () => void = () => {};
 @Input() ClassName: string = '';
+@Input() disabled: boolean = false;
 
 handleClick() {
   if (this.click) {

@@ -1,28 +1,23 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { UserOp, UserOptions } from 'src/app/utils/UserOptions';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Options, UserOptions } from 'src/app/utils/UserOptions';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { UserService } from 'src/app/auth/services/user.service';
+import { User } from 'src/app/auth/interfaces/User.interface';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit,AfterViewInit{
-  constructor(private readonly Router:Router) { }
+export class HeaderComponent implements OnInit{
+  constructor(private readonly Router:Router,private readonly User:UserService) { }
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>;
-  ngAfterViewInit(): void {
-    if (this.searchInput) {
-      console.log(this.searchInput.nativeElement.value); // Puedes acceder al valor del input aquí
-    }
-  }
   items: MenuItem[] | undefined;
 
   activeItem: any | undefined;
   isUserMenuOpen: boolean = false;
-  get Islogin() {
-    return localStorage.getItem('user') ? true : false;
-  }
-  OptionsU: UserOptions[] = UserOp;
+
+  OptionsU: UserOptions[] = new Options(this.Router,this.User).UserOp;
 
 
   ngOnInit() {
@@ -36,11 +31,11 @@ export class HeaderComponent implements OnInit,AfterViewInit{
 
 
   }
-  onTabChange(label: string) {
-    this.Router.navigate([label]);
-  }
 SearchMedia(){
   this.Router.navigateByUrl(`search/${this.searchInput.nativeElement.value}`);
   this.searchInput.nativeElement.value='';
+}
+getUser():User|null{
+  return this.User.currentUserValue;
 }
 }

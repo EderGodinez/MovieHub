@@ -34,7 +34,6 @@ get SeriesList(): Observable<Serie[]> {
       delay(1000),
       map((series:Serie[])=>{
         const serie=series.find((serie:Serie)=>serie.id===parseInt(id)&&serie.media_type==='serie')
-        console.log(serie);
         return serie
       })
     ))

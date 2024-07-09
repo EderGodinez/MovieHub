@@ -1,5 +1,10 @@
-<div class="txt_field">
-      <input [type]="type" required/>
+<div class="txt_field" >
+      <input
+      [type]="type"
+      [value]="value"
+      (input)="onInputChange($event)"
+      [ngClass]="{ 'error_class': HasError }"
+       required/>
       <span></span>
       <label>{{label}}</label>
     </div>

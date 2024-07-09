@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [],
   imports: [
@@ -11,7 +12,8 @@ import { ButtonModule } from 'primeng/button';
   exports: [
      OverlayPanelModule,
      SkeletonModule,
-     ButtonModule
+     ButtonModule,
+     ToastModule
   ]
 })
 export class PrimeNGModule { }
