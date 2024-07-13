@@ -133,7 +133,7 @@ Follow these steps to set up and run the project:
 
 | What was done well? | What can I do differently? | What didn't go well? |
 ----------------------------------|----------------------------|-----------------------
-| relearn my knowledge in angular | Work a little more efficiently| I couldn't complete the 50% of code coverage |
+| Relearn my knowledge in Angular | Work a little more efficiently plus I could have avoided creating some components with the use of templates and containers | I couldn't complete the 100% of code coverage because I had several problems with the testing of the primeng p-toast component  |
 
 ## Testing and Code Coverage
 
