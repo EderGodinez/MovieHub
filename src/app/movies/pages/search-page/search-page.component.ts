@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FilterMedia } from 'src/app/utils/funtions/searchMedia';
 import { MoviesService } from '../../services/movies/movies.service';
-import { SeriesService } from '../../services/series/series.service';
-import {  delay, forkJoin } from 'rxjs';
 import { Movie } from '../../interfaces/movie.interface';
+import { SharedService } from 'src/app/shared/service/shared.service';
+
 
 @Component({
   selector: 'app-search-page',
@@ -12,7 +11,7 @@ import { Movie } from '../../interfaces/movie.interface';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit{
-constructor(private route: ActivatedRoute, private MoviesService:MoviesService,private SeriesService:SeriesService,private Router:Router) {
+constructor(private route: ActivatedRoute, private MoviesService:MoviesService,private Router:Router,private FunctionsService:SharedService) {
 }
   ngOnInit(): void {
     this.route.params.subscribe((params)=>{
@@ -32,11 +31,9 @@ query:string='';
 searchMedia(query:string){
   this.Isloading=true;
     let media_list:Movie[]=[]
-    this.MoviesService.GetAllMedia().pipe(
-      delay(1000)
-    ).subscribe((data)=>{
+    this.MoviesService.GetAllMedia().subscribe((data)=>{
       media_list=[...data[0],...data[1]];
-      this.setMedia(FilterMedia(query,media_list));
+      this.setMedia(this.FunctionsService.FilterMedia(query,media_list));
       this.Isloading=false;
       if(this.media_results.length===1){
         this.Router.navigate([`details/${this.media_results[0].media_type}/${this.media_results[0].id}`]);

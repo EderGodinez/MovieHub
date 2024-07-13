@@ -5,6 +5,7 @@ import { SeriesService } from '../../movies/services/series/series.service';
 import { Movie } from '../../movies/interfaces/movie.interface';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Serie } from '../../movies/interfaces/series.interface';
+import { SharedModule } from '../../shared/shared.module';
 
 // Crea un JSON de prueba para los datos de las películas
 const movie:Movie={
@@ -54,6 +55,9 @@ describe('MoviesListPage', () => {
     const seriesServiceSpy = jasmine.createSpyObj('SeriesService', ['getAllSeries']);
 
     TestBed.configureTestingModule({
+      imports: [
+        SharedModule
+      ],
       declarations: [HomePageComponent],
       providers: [
         { provide: MoviesService, useValue: moviesServiceSpy },

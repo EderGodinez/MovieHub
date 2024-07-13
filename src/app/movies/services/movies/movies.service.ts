@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable,map, delay, firstValueFrom, forkJoin } from 'rxjs';
 import { Movie } from '../../interfaces/movie.interface';
-import { CalculateTrendingAv } from 'src/app/utils/funtions/CalculateTrendingAv';
 import { SeriesService } from '../series/series.service';
 import { Serie } from '../../interfaces/series.interface';
+import { SharedService } from 'src/app/shared/service/shared.service';
 
 @Injectable({providedIn: 'root'})
 export class MoviesService {
-  constructor(private httpClient: HttpClient,private readonly SeriesService:SeriesService) { }
+  constructor(private httpClient: HttpClient,private readonly SeriesService:SeriesService,private FunctionsService:SharedService) { }
   environments = environment;
 get MoviesList(): Observable<Movie[]> {
     return this.httpClient.get<Movie[]>(this.environments.JSON_data_url).pipe(
@@ -26,6 +26,10 @@ get MoviesList(): Observable<Movie[]> {
   return movies;
   }
   async getTrendingMovies(): Promise<Movie[]> {
+   const CalculateTrendingAv = (Movie: Movie): number => {
+      const DaysInTheaters=this.FunctionsService.CalculateDiferenceOfDays(Movie.release_date);
+      return Movie.popularity/DaysInTheaters;
+    };
     const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
       map((movies:Movie[])=>movies.sort((a,b)=>CalculateTrendingAv(b)-CalculateTrendingAv(a))),
@@ -37,6 +41,7 @@ get MoviesList(): Observable<Movie[]> {
   //Obtenemos las 10 películas más populares
   //@ return Promise<Movie[]>
   async getMostPopularMovies(): Promise<Movie[]> {
+
     const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
       map((movies:Movie[])=>movies.sort((a,b)=>b.popularity-a.popularity)),
@@ -74,6 +79,6 @@ get MoviesList(): Observable<Movie[]> {
       GetAllMedia():Observable<[Movie[], Serie[]]>{
         const movies= this.MoviesList
     const series= this.SeriesService.SeriesList
-    return forkJoin([movies,series]);
+    return forkJoin([movies,series]).pipe(delay(1000));
       }
 }

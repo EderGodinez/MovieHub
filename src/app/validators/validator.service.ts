@@ -1,13 +1,13 @@
 
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { UserService } from '../auth/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidatorService {
-  public  firstNameAndLastnamePattern: string = '([a-zA-Z]+)(?: ([a-zA-Z]+))?';
-  public  emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  constructor(private readonly UserService:UserService) { }
   public AreFieldsEquals(pass: string, confirm: string): ValidatorFn {
     return (Form: AbstractControl): ValidationErrors | null => {
       const field1 = Form.get(pass);
@@ -43,37 +43,20 @@ export class ValidatorService {
         case 'required':
           return 'Este campo es requerido';
         case 'minlength':
-          return `Campo requere mínimo ${ errors['minlength'].actualLength }/${ errors['minlength'].requiredLength } caracters.`;
+          return `Campo requiere mínimo ${ errors['minlength'].actualLength }/${ errors['minlength'].requiredLength } caracteres.`;
         case 'maxlength':
           return `Máximo ${errors['maxlength'].actualLength}/${errors['maxlength'].requiredLength} caracteres.`;
-        case 'min':
-              return `La cantidad debe der de minimo ${ errors['min'].min } .`;
-        case 'max':
-              return `La cantidad maxima no debe sobrepasar ${ errors['max'].max }.`;
         case 'pattern':
-                return `Formato de campo ${type} invalido.`;
+                return `Formato de campo ${type} inválido.`;
         case 'FieldsEquals':
-          return 'La nueva contraseña debe de ser diferente a la anterior'
+          return 'La nueva contraseña debe ser diferente a la anterior'
         case 'FieldsDiferents':
           return 'Las contraseñas no coinciden'
         case 'wrongPass':
           return 'Contraseña incorrecta'
-        case 'emailExist':
-          return 'El correo ya existe'
       }
     }
     return null;
   }
-  UniqueEmail( ): ValidatorFn {
-    const emails :string[]= [];
-    return (control: AbstractControl): ValidationErrors | null => {
-      if ( control.value ) {
-        const email = control.value.toLowerCase();
-        if ( emails.includes(email) ) {
-          return { UniqueEmail: true };
-        }
-      }
-      return null;
-    };
-  }
+
 }

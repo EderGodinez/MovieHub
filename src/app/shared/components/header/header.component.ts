@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit{
   constructor(private readonly Router:Router,private readonly User:UserService) { }
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>;
   items: MenuItem[] | undefined;
-
+ 
   activeItem: any | undefined;
   isUserMenuOpen: boolean = false;
 
@@ -32,8 +32,12 @@ export class HeaderComponent implements OnInit{
 
   }
 SearchMedia(){
-  this.Router.navigateByUrl(`search/${this.searchInput.nativeElement.value}`);
+  const query=this.searchInput.nativeElement.value;
+  if (query) {
+    this.Router.navigateByUrl(`search/${query}`);
   this.searchInput.nativeElement.value='';
+  }
+return;
 }
 getUser():User|null{
   return this.User.currentUserValue;

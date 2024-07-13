@@ -23,10 +23,6 @@ export class FormFieldComponent implements ControlValueAccessor {
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
 
-  get inputType() {
-    return this.type;
-  }
-
   writeValue(value: any): void {
     this.value = value || '';
   }
@@ -41,11 +37,5 @@ export class FormFieldComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     // Implement if needed
-  }
-
-  onInputChange(event: any) {
-    this.value = event.target.value;
-    this.onChange(this.value);
-    this.onTouched();
   }
 }

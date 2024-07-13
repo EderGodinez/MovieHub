@@ -19,6 +19,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { SharedService } from './shared/service/shared.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { MessageService } from 'primeng/api';
     PrimeNGModule,
     SharedModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService,SharedService],
   bootstrap: [AppComponent],
 
 })

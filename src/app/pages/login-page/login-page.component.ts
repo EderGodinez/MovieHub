@@ -17,7 +17,7 @@ loginForm!: FormGroup;
 
 ngOnInit(): void {
   this.loginForm = this.FB.group({
-    email: ['', [Validators.required, Validators.pattern(this.ValidatorService.emailPattern)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
     password: ['', [Validators.required, Validators.minLength(10)]]
   });
 }
@@ -45,8 +45,5 @@ ValidateField(field: string): boolean|null {
 }
 GetFieldErrorMessage(field: string,type:string=''): string|null {
  return this.ValidatorService.getFieldError(this.loginForm, field,type);
-}
-showToast() {
-  this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Warn', detail: 'Message Content' });
 }
 }

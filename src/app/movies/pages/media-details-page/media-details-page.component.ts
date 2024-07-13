@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SeriesService } from '../../services/series/series.service';
 import { MoviesService } from '../../services/movies/movies.service';
 import { Movie } from '../../interfaces/movie.interface';
-import { shuffle } from 'src/app/utils/funtions/shufleeArray';
 import { UserService } from '../../../auth/services/user.service';
 import { MessageService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
+import { SharedService } from 'src/app/shared/service/shared.service';
+
 
 @Component({
   selector: 'app-media-details-page',
@@ -14,7 +15,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./media-details-page.component.scss']
 })
 export class MediaDetailsPageComponent implements OnInit{
-constructor(private readonly RouterActived:ActivatedRoute,private readonly SeriesService:SeriesService,
+constructor(private readonly RouterActived:ActivatedRoute,private readonly SeriesService:SeriesService,private FunctionsService:SharedService,
   private readonly MoviesService:MoviesService,private readonly Router:Router,private readonly UserService:UserService,private MessageService:MessageService) { }
 
 MediaDitails!:Movie;
@@ -35,7 +36,7 @@ Isloading = true;
     });
     this.MoviesService.GetAllMedia().subscribe((data) => {
       const combinedMedia = [...data[0], ...data[1]];
-      this.MediaRecomendations = shuffle(combinedMedia)
+      this.MediaRecomendations = this.FunctionsService.shuffle(combinedMedia)
         .filter((media) => parseInt(media.id.toString()) !== parseInt(id))
         .slice(0, 10);
     });
@@ -85,7 +86,6 @@ ShowMovie(){
     }, 2000);
   }
   else{
-    console.log(this.MediaDitails,' ver pelicula');
     this.MessageService.add({ key: 'tc', severity: 'info', summary: 'Ver Pelicula', detail: 'Estamos trabajando en esta funcionalidad' });
   }
 }

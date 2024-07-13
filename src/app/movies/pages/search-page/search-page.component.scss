@@ -6,3 +6,9 @@
   justify-content: start;
   padding: 20px;
 }
+:host
+{
+  display: block;
+  height: 80vh;
+  width: 100%;
+}

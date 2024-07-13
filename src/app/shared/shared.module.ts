@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { SharedService } from './service/shared.service';
 
 
 
@@ -16,7 +17,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     FooterComponent,
     AuthButtonComponent,
     FormFieldComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +31,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     FormFieldComponent,
     LoadingComponent
   ],
+  providers: [SharedService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

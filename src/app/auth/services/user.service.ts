@@ -19,7 +19,7 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  private setCurrentUser(user: User | null): void {
+  public setCurrentUser(user: User | null): void {
     this.currentUserSubject.next(user);
   }
   UserLogin(email:string,password:string):string{
