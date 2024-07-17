@@ -138,29 +138,31 @@ Follow these steps to set up and run the project:
 ## Testing and Code Coverage
 
 These images are the tests and the code coverage of the applications and their functions.
+### CMD
+ ![CMD](/public/cmd_code-coverage_stats.png)
+ ### Testing
+ ![Testing](/public/testing.png)
+ ### Code_coverage
+ ![Code_coverage](/public/code_coverage_stats.png)
 
-- [CMD](/public/cmd_code-coverage_stats.png)
-- [Testing](/public/testing.png)
-- [Code_coverage](/public/code_coverage_stats.png)
 
-
-## Images of Proyect
+## Images of Project
  
  The images are to see what the application would look like in different resolutions.
 
 ### Desktop view
-- [Search movie](/public/Busqueda.png)
-- [Movie Details](/public/Detalles_Pelicula.png)
-- [Home](/public/Inicio.png)
-- [Login](/public/login.png)
-- [Login form Validated](/public/login_validado.png)
-- [Favorite Page](/public/Pagina_Favoritos.png)
-- [Register form Validated](/public/registro_validado.png)
-- [Register](/public/registro.png)
+![Search movie](/public/Busqueda.png)
+![Movie Details](/public/Detalles_Pelicula.png)
+![Home](/public/Inicio.png)
+![Login](/public/login.png)
+![Login form Validated](/public/login_validado.png)
+![Favorite Page](/public/Pagina_Favoritos.png)
+![Register form Validated](/public/registro_validado.png)
+![Register](/public/registro.png)
 ### Mobile view
-- [Movie Details](/public/mobile_details.png)
-- [Movies](/public/mobile_view.png)
-- [Login](/public/mobile_login.png)
+- ![Movie Details](/public/mobile_details.png)
+- ![Movies](/public/mobile_view.png)
+- ![Login](/public/mobile_login.png)
 
 ## Build
 
