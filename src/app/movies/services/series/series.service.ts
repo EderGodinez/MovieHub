@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, firstValueFrom, map } from 'rxjs';
+import { Observable, delay, firstValueFrom, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Serie } from '../../interfaces/series.interface';
 
@@ -9,15 +9,13 @@ export class SeriesService {
   constructor(private httpClient: HttpClient) { }
   environments = environment;
 get SeriesList(): Observable<Serie[]> {
-    return this.httpClient.get<Serie[]>(this.environments.JSON_data_url).pipe(
-      map((series:Serie[])=>series.filter((serie:Serie)=>serie.media_type==='serie'))
-    );
+    return this.httpClient.get<Serie[]>(`${this.environments.API_URL}series`)
   }
  async getTvShowsbyYear(year:number): Promise<Serie[]> {
   //Transformamos un observable en una promesa con firstValueFrom
   const series:Serie[]=await firstValueFrom(this.SeriesList.pipe(
   delay(1000),
-  map((movies:Serie[])=>movies.filter((series:Serie)=>new Date(series.release_date).getFullYear()===year))
+  map((movies:Serie[])=>movies.filter((series:Serie)=>new Date(series.RelaseDate).getFullYear()===year))
 )).then((movies:Serie[])=>movies)
 .catch(()=>[]) as Serie[];
   return series;
@@ -30,12 +28,8 @@ get SeriesList(): Observable<Serie[]> {
       return series;
   }
   async getTvShowbyId(id:any): Promise<Serie> {
-    const series:Serie=await firstValueFrom(this.SeriesList.pipe(
+    const series:Serie=await firstValueFrom(this.httpClient.get<Serie>(`${this.environments.API_URL}series/${id}`).pipe(
       delay(1000),
-      map((series:Serie[])=>{
-        const serie=series.find((serie:Serie)=>serie.id===parseInt(id)&&serie.media_type==='serie')
-        return serie
-      })
     ))
     .then((series:Serie|undefined)=>series)
     .catch(()=>null) as Serie;
@@ -44,7 +38,7 @@ get SeriesList(): Observable<Serie[]> {
   async getTvShowsByGenre(genre:string): Promise<Serie[]> {
     const series:Serie[]=await firstValueFrom(this.SeriesList.pipe(
       delay(1000),
-      map((series:Serie[])=>series.filter((series:Serie)=>series.genders.includes(genre)))
+      map((series:Serie[])=>series.filter((series:Serie)=>series.Genders.includes(genre)))
     ))
     .then((series:any)=>series)
     .catch(()=>[]) as Serie[];

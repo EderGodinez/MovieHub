@@ -37,7 +37,7 @@ Isloading = true;
     this.MoviesService.GetAllMedia().subscribe((data) => {
       const combinedMedia = [...data[0], ...data[1]];
       this.MediaRecomendations = this.FunctionsService.shuffle(combinedMedia)
-        .filter((media) => parseInt(media.id.toString()) !== parseInt(id))
+        .filter((media) => parseInt(media.Id.toString()) !== parseInt(id))
         .slice(0, 10);
     });
     forkJoin([mediaRequest, this.MoviesService.GetAllMedia()]).subscribe({
@@ -55,7 +55,7 @@ hideMedia(){
   }
   else{
     setTimeout(() => {
-      this.MessageService.add({ key: 'tc', severity: 'info', summary: 'Ocultando', detail: `${this.MediaDitails.title} ocultada` });
+      this.MessageService.add({ key: 'tc', severity: 'info', summary: 'Ocultando', detail: `${this.MediaDitails.Title} ocultada` });
       this.Router.navigate(['/Inicio']);
     }, 2000);
   }
@@ -69,9 +69,9 @@ AddFavorite(){
 
   }
   else{
-    this.MessageService.add({ key: 'tc', severity: 'success', summary: 'Agregando a favoritos', detail: `${this.MediaDitails.title} agregada` });
+    this.MessageService.add({ key: 'tc', severity: 'success', summary: 'Agregando a favoritos', detail: `${this.MediaDitails.Title} agregada` });
     setTimeout(() => {
-      this.UserService.AddFavoriteMedia(this.MediaDitails.id);
+      this.UserService.AddFavoriteMedia(this.MediaDitails.Id);
       this.Router.navigate(['/Favoritos']);
     }, 2000);
 

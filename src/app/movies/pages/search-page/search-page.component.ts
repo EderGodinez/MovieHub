@@ -36,7 +36,7 @@ searchMedia(query:string){
       this.setMedia(this.FunctionsService.FilterMedia(query,media_list));
       this.Isloading=false;
       if(this.media_results.length===1){
-        this.Router.navigate([`details/${this.media_results[0].media_type}/${this.media_results[0].id}`]);
+        this.Router.navigate([`details/${this.media_results[0].TypeMedia}/${this.media_results[0].Id}`]);
       }
     });
 }

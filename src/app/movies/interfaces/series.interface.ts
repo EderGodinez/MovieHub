@@ -1,12 +1,9 @@
-import { Movie } from "./movie.interface"
+import { Episode } from "./Episode.interface";
+import { Media } from "./media.interface";
 
-export interface Serie extends Movie{
-  last_season: number
-  platforms: string[]
-  last_season_date: string
+export interface Serie extends Media{
+  EpisodeList?:Episode[]
 }
-
-
 
 
 

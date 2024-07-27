@@ -18,7 +18,8 @@ export class SharedService {
   getAllUniqueGenders(mediaList: Movie[]): string[] {
     const genderSet = new Set<string>();
     mediaList.forEach(media => {
-      media.genders.forEach(gender => {
+      const ArrayGenders = media.Genders.split(',');
+      ArrayGenders.forEach(gender => {
         genderSet.add(gender);
       });
     });
@@ -27,10 +28,13 @@ export class SharedService {
 
   FilterMedia(query: string, mediaList: Movie[]): Movie[] {
     const lowerCaseQuery = query.toLowerCase();
-    return mediaList.filter(media =>
-      media.title.toLowerCase().includes(lowerCaseQuery) ||
-      media.genders.some(gender => gender.toLowerCase().includes(lowerCaseQuery)) ||
-      media.overview.toLowerCase().includes(lowerCaseQuery)
+    return mediaList.filter(media =>{
+      const ArrayGenders = media.Genders.split(',');
+      return media.Title.toLowerCase().includes(lowerCaseQuery) ||
+      ArrayGenders.some(gender => gender.toLowerCase().includes(lowerCaseQuery)) ||
+      media.Overview.toLowerCase().includes(lowerCaseQuery)
+    }
+
     );
   }
 

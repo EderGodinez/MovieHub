@@ -1,21 +1,21 @@
 
 <p-toast position="bottom-center" key="tc"></p-toast>
 <div *ngIf="!Isloading;else loading">
-  <img [src]="MediaDitails?.public_image_path" [alt]="MediaDitails?.title" class="public_image">
+  <img [src]="MediaDitails.ImagePath" [alt]="MediaDitails.Title" class="public_image">
   <section class="media-details">
     <div style="display: flex;color: aliceblue; gap: 20px; flex-wrap: wrap;">
       <div class="post_container">
-        <img [src]="MediaDitails?.poster_path" [alt]="MediaDitails?.title">
+        <img [src]="MediaDitails.PosterImage" [alt]="MediaDitails.Title">
       </div>
       <div class="descripcion_movie">
         <div>
-          <h1>{{MediaDitails?.title}}</h1>
-          <span *ngFor="let item of MediaDitails?.genders; let i = index">
-            {{item}}{{i < MediaDitails!.genders.length - 1 ? ' - ' : ''}}
+          <h1>{{MediaDitails.Title}}</h1>
+          <span *ngFor="let item of MediaDitails.Genders; let i = index">
+            {{item}}{{i < MediaDitails.Genders.length - 1 ? ' - ' : ''}}
           </span>
-          <p>{{MediaDitails?.overview}}</p>
-          <p>{{MediaDitails?.release_date}}</p>
-          <p>IMB - {{MediaDitails?.vote_average}}</p>
+          <p>{{MediaDitails.Overview}}</p>
+          <p>{{MediaDitails.RelaseDate}}</p>
+          <!-- <p>IMB - {{MediaDitails?.vote_average}}</p> -->
         </div>
 
       <div class="buttons">

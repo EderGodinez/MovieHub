@@ -11,7 +11,7 @@ export class MovieCardComponent{
   constructor(private readonly Router:Router) { }
 @Input() media!: Movie;
 ShowDetails(){
- this.Router.navigate([`details/${this.media.media_type}/${this.media.id}`]);
+ this.Router.navigate([`details/${this.media.TypeMedia}/${this.media.Id}`]);
 }
 
 }

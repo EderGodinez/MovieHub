@@ -24,11 +24,13 @@ fecthData(){
   this.MoviesService.GetAllMedia().subscribe((data)=>{
     const media_list=[...data[0],...data[1]];
     const gendersList=this.FunctionsService.getAllUniqueGenders(media_list).slice(0,5);
+    console.log(gendersList);
     const categoriesPromises = gendersList.map((gender) => {
       const moviesPromise = this.MoviesService.getMoviesByGenre(gender);
       const seriesPromise = this.SeriesService.getTvShowsByGenre(gender);
       return Promise.all([moviesPromise, seriesPromise])
       .then(([movies, series]) => {
+        console.log(movies);
         const media = [...movies, ...series];
         this.Categories[gender] = media;
       });
