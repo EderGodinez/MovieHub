@@ -10,7 +10,7 @@ describe('MovieCardComponent', () => {
 
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    const moviesServiceSpy = jasmine.createSpyObj('MoviesService', ['getMoviesByYear', 'getTrendingMovies']); 
+    const moviesServiceSpy = jasmine.createSpyObj('MoviesService', ['getMoviesByYear', 'getTrendingMovies']);
     await TestBed.configureTestingModule({
       declarations: [MovieCardComponent],
       providers: [
@@ -24,23 +24,21 @@ describe('MovieCardComponent', () => {
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     // Mock input data
     component.media = {
-      "adult": false,
-      "public_image_path": "assets/images/public_images/fqv8v6AycXKsivp1T5yKtLbGXce.jpg",
-      "genders": [
-          "Ciencia ficción",
-          "Aventura",
-          "Acción"
-      ],
-      "id": 3,
-      "original_title": "Kingdom of the Planet of the Apes",
-      "overview": "300 años después del reinado de César, un nuevo líder tiránico construye su imperio esclavizando a otros clanes de primates, un joven simio llamado Noa emprende un viaje desgarrador que lo hará cuestionar todo lo que sabía sobre el pasado y tomar decisiones que definirán el futuro tanto de simios como humanos.",
-      "popularity": 1978.964,
-      "poster_path": "assets/images/posters/kkFn3KM47Qq4Wjhd8GuFfe3LX27.jpg",
-      "release_date": "2024-05-08",
-      "title": "El planeta de los simios: Nuevo reino",
-      "vote_average": 6.9,
-      media_type: 'movie'
-  },
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller"
+    },
 
     fixture.detectChanges();
   });
@@ -52,6 +50,6 @@ describe('MovieCardComponent', () => {
     const spy = spyOn(component, 'ShowDetails').and.callThrough();
     component.ShowDetails();
     expect(spy).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith([`details/${component.media.media_type}/${component.media.id}`]);
+    expect(router.navigate).toHaveBeenCalledWith([`details/${component.media.TypeMedia}/${component.media.Id}`]);
   });
 });

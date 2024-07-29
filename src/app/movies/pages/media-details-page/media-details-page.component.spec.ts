@@ -24,20 +24,21 @@ describe('MediaDetailsPageComponent', () => {
   let messageServiceSpy: jasmine.SpyObj<MessageService>;
   let activatedRouteStub: Partial<ActivatedRoute>;
   let routerSpy: jasmine.SpyObj<Router>;
-
   const dummyMovie: Movie = {
-    adult: false,
-    public_image_path: 'assets/images/public_images/jvPMJ2zM92jfXxVEFsqP1MMrLaO.jpg',
-    genders: ['Action'],
-    id: 1,
-    original_title: 'Movie 1',
-    overview: 'Overview 1',
-    popularity: 10,
-    poster_path: 'assets/images/posters/movie1.jpg',
-    release_date: '2024-01-01',
-    title: 'Movie 1',
-    vote_average: 7.0,
-    media_type: 'movie'
+    Id: 1,
+    Title: "Inception",
+    OriginalTitle: "Inception",
+    Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    ImagePath: "/images/inception.jpg",
+    PosterImage: "/posters/inception.jpg",
+    TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+    WatchLink: "https://www.example.com/watch/inception",
+    AddedDate: "2024-07-26T10:00:00Z",
+    TypeMedia: "movie",
+    RelaseDate: "2010-07-16T00:00:00Z",
+    AgeRate: "PG-13",
+    IsActive: true,
+    Genders: "Action, Sci-Fi, Thriller"
   };
 
   beforeEach(async () => {
@@ -98,8 +99,8 @@ describe('MediaDetailsPageComponent', () => {
   // }));
 
   it('should navigate to Inicio if user is logged in when hiding media', fakeAsync(() => {
-    userServiceSpy.setCurrentUser({ id: '1',name:'testUser',FavoritesMediaId:[] ,email:'',password:'' });
-    component.MediaDitails = { id: 1, title: 'Test Movie' } as Movie;
+    userServiceSpy.setCurrentUser({ Name:'testUser',FavoritesMediaId:[] ,Email:'' });
+    component.MediaDitails = { Id: 1, Title: 'Test Movie' } as Movie;
 
     component.hideMedia();
     tick(2000);
@@ -117,10 +118,8 @@ describe('MediaDetailsPageComponent', () => {
   // }));
 
   it('should add favorite and navigate to Favoritos if user is logged in', fakeAsync(() => {
-    userServiceSpy.setCurrentUser({ id: '1',name:'testUser',FavoritesMediaId:[] ,email:'',password:'' });
-
-    component.MediaDitails = { id: 1, title: 'Test Movie' } as Movie;
-
+    userServiceSpy.setCurrentUser({ Name:'testUser',FavoritesMediaId:[] ,Email:'' });
+    component.MediaDitails = { Id: 1, Title: 'Test Movie' } as Movie;
     component.AddFavorite();
     tick(2000);
 
@@ -138,8 +137,8 @@ describe('MediaDetailsPageComponent', () => {
   // }));
 
   it('should show movie info if user is logged in', () => {
-    userServiceSpy.setCurrentUser({ id: '1',name:'testUser',FavoritesMediaId:[] ,email:'',password:'' });
-    component.MediaDitails = { id: 1, title: 'Test Movie' } as Movie;
+    userServiceSpy.setCurrentUser({ Name:'testUser',FavoritesMediaId:[] ,Email:'' });
+    component.MediaDitails = { Id: 1, Title: 'Test Movie' } as Movie;
     component.ShowMovie();
 
     expect(messageServiceSpy.add).toHaveBeenCalledWith({ key: 'tc', severity: 'info', summary: 'Ver Pelicula', detail: 'Estamos trabajando en esta funcionalidad' });

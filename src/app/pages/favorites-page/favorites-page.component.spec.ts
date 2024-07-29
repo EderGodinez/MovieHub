@@ -44,38 +44,42 @@ describe('FavoritesPageComponent', () => {
     const favoriteIds:number[] = [1, 2];
     const mockMovies: Movie[] = [
       {
-        adult: false,
-        public_image_path: 'assets/images/public_images/wNAhuOZ3Zf84jCIlrcI6JhgmY5q.jpg',
-        genders: ['Acción', 'Aventura', 'Ciencia ficción'],
-        id: 1,
-        original_title: 'Furiosa: A Mad Max Saga',
-        overview: 'Mientras el mundo se derrumba, la joven Furiosa es secuestrada del Lugar Verde de Muchas Madres y cae en manos de una Horda de Motociclistas liderada por el Señor de la Guerra Dementus. Recorriendo la tierra baldía llega a la Ciudadela, presidida por Inmortan Joe. Mientras los dos tiranos luchan por el dominio de la zona, Furiosa deberá sobrevivir a muchas pruebas buscando volver a casa',
-        popularity: 4806.719,
-        poster_path: 'assets/images/posters/tGHUlykWn9V2IIQ4ZaATIAq9VLB.jpg',
-        release_date: '2024-05-22',
-        title: 'Furiosa: De la Saga Mad Max',
-        vote_average: 7.709,
-        media_type: 'movie'
+        Id: 1,
+        Title: "Inception",
+        OriginalTitle: "Inception",
+        Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+        ImagePath: "/images/inception.jpg",
+        PosterImage: "/posters/inception.jpg",
+        TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+        WatchLink: "https://www.example.com/watch/inception",
+        AddedDate: "2024-07-26T10:00:00Z",
+        TypeMedia: "movie",
+        RelaseDate: "2010-07-16T00:00:00Z",
+        AgeRate: "PG-13",
+        IsActive: true,
+        Genders: "Action, Sci-Fi, Thriller"
       },
       {
-        adult: false,
-        public_image_path: 'assets/images/public_images/xg27NrXi7VXCGUr7MG75UqLl6Vg.jpg',
-        genders: ['Animación', 'Familia', 'Aventura', 'Comedia'],
-        id: 2,
-        original_title: 'Inside Out 2',
-        overview: 'Una aventura completamente nueva dentro de la cabeza adolescente de Riley que presenta un nuevo conjunto de emociones.',
-        popularity: 4502.62,
-        poster_path: 'assets/images/posters/2PuAY3xSvbchQWqpSiXw08Yt0NP.jpg',
-        release_date: '2024-06-11',
-        title: 'IntensaMente 2',
-        vote_average: 7.715,
-        media_type: 'movie'
+        Id: 1,
+        Title: "Inception",
+        OriginalTitle: "Inception",
+        Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+        ImagePath: "/images/inception.jpg",
+        PosterImage: "/posters/inception.jpg",
+        TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+        WatchLink: "https://www.example.com/watch/inception",
+        AddedDate: "2024-07-26T10:00:00Z",
+        TypeMedia: "movie",
+        RelaseDate: "2010-07-16T00:00:00Z",
+        AgeRate: "PG-13",
+        IsActive: true,
+        Genders: "Action, Sci-Fi, Thriller"
       }
     ];
     const MockUser={ FavoritesMediaId: favoriteIds, name:'',id: '1' , email: '', password: '' }
     Object.defineProperty(mockUserService, 'currentUserValue', { get: () => MockUser });
     mockMoviesService.getMoviebyId.and.callFake((id: number) => {
-      const movie = mockMovies.find(movie => movie.id === id);
+      const movie = mockMovies.find(movie => movie.Id === id);
       if (movie) {
         return firstValueFrom(of(movie));
       } else {

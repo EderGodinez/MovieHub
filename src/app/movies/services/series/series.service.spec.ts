@@ -20,51 +20,37 @@ describe('SeriesService', () => {
     // Datos simulados
     mockSeriesList = [
       {
-        "media_type": "serie",
-        "adult": false,
-        "public_image_path": "assets/images/public_images/The_Office.jpg",
-        "id": 29,
-        "poster_path": "assets/images/posters/The_Office.jpg",
-        "release_date": "2024-05-22",
-        "last_season": 1,
-        "platforms": [
-          "Netflix",
-          "Amazon Prime Video",
-          "HBO Max"
-        ],
-        "last_season_date": "2024-05-22",
-        "vote_average": 7.709,
-        "title": "The Office",
-        "popularity": 4890.32,
-        "genders": [
-          "Comedia"
-        ],
-        "overview": "Una mirada cómica y a menudo absurda de la vida diaria en una oficina de la empresa Dunder Mifflin, centrada en los empleados y sus interacciones peculiares."
+        Id: 1,
+        Title: "Inception",
+        OriginalTitle: "Inception",
+        Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+        ImagePath: "/images/inception.jpg",
+        PosterImage: "/posters/inception.jpg",
+        TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+        WatchLink: "https://www.example.com/watch/inception",
+        AddedDate: "2024-07-26T10:00:00Z",
+        TypeMedia: "movie",
+        RelaseDate: "2010-07-16T00:00:00Z",
+        AgeRate: "PG-13",
+        IsActive: true,
+        Genders: "Action, Sci-Fi, Thriller",
+        EpisodeList: []
       },
       {
-        "media_type": "serie",
-        "adult": false,
-        "public_image_path": "assets/images/public_images/Kimetsu_no_Yaiba.webp",
-        "id": 30,
-        "poster_path": "assets/images/posters/Kimetsu_no_Yaiba.jpg",
-        "release_date": "2024-05-22",
-        "last_season": 1,
-        "platforms": [
-          "Netflix",
-          "Amazon Prime Video",
-          "HBO Max"
-        ],
-        "last_season_date": "2023-05-22",
-        "vote_average": 7.709,
-        "title": "Kimetsu no Yaiba",
-        "popularity": 4890.32,
-        "genders": [
-          "Acción",
-          "Aventura",
-          "Drama",
-          "Sobrenatural"
-        ],
-        "overview": "Un joven bondadoso llamado Tanjiro Kamado se convierte en cazador de demonios después de que su familia es brutalmente asesinada por demonios. Acompañado por su hermana Nezuko, quien fue transformada en demonio, Tanjiro busca venganza y una cura para Nezuko mientras se enfrenta a poderosos enemigos y descubre oscuros secretos sobre el mundo de los demonios."
+        Id: 1,
+        Title: "Inception",
+        OriginalTitle: "Inception",
+        Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+        ImagePath: "/images/inception.jpg",
+        PosterImage: "/posters/inception.jpg",
+        TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+        WatchLink: "https://www.example.com/watch/inception",
+        AddedDate: "2024-07-26T10:00:00Z",
+        TypeMedia: "movie",
+        RelaseDate: "2010-07-16T00:00:00Z",
+        AgeRate: "PG-13",
+        IsActive: true,
+        Genders: "Action, Sci-Fi, Thriller"
       }
     ];
   });
@@ -78,7 +64,7 @@ describe('SeriesService', () => {
     spyOn(service['httpClient'], 'get').and.returnValue(of(mockSeriesList));
     service.SeriesList.subscribe((series) => {
       expect(series.length).toBe(2);
-      expect(series.every(serie => serie.media_type === 'serie')).toBeTrue();
+      expect(series.every(serie => serie.TypeMedia === 'serie')).toBeTrue();
       done();
     });
   });
@@ -101,7 +87,7 @@ describe('SeriesService', () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(of(mockSeriesList));
     const series = await service.getTvShowsbyYear(2024);
     expect(series.length).toBe(2);
-    expect(series.every(serie => new Date(serie.release_date).getFullYear() === 2024)).toBeTrue();
+    expect(series.every(serie => new Date(serie.RelaseDate).getFullYear() === 2024)).toBeTrue();
   });
   it('should return empty list on error for getTvShowsbyYear', async () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(throwError(() => new Error('Network error')));
@@ -123,7 +109,7 @@ describe('SeriesService', () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(of(mockSeriesList));
     const series = await service.getTvShowbyId(29);
     expect(series).toBeTruthy();
-    expect(series.id).toBe(29);
+    expect(series.Id).toBe(29);
   });
   it('should return null on error for getTvShowbyId', async () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(throwError(() => new Error('Network error')));

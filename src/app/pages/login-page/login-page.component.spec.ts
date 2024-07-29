@@ -53,7 +53,7 @@ describe('LoginPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
- 
+
 
   it('should return field error message', () => {
     component.loginForm.controls['email'].setValue('');
@@ -63,7 +63,7 @@ describe('LoginPageComponent', () => {
   });
 
   it('should call UserService.UserLogin and handle error message', () => {
-    mockUserService.UserLogin.and.returnValue('Usuario o contraseña incorrectos');
+    mockUserService.UserLogin.and.returnValue(new Promise(resolve => resolve('Usuario o contraseña incorrectos')));
     component.loginForm.controls['email'].setValue('test@example.com');
     component.loginForm.controls['password'].setValue('password123');
     component.onSubmit();
@@ -73,7 +73,7 @@ describe('LoginPageComponent', () => {
   });
 
   it('should call UserService.UserLogin and handle success message', () => {
-    mockUserService.UserLogin.and.returnValue('Inicio de sesión exitoso');
+    mockUserService.UserLogin.and.returnValue(new Promise(resolve => resolve('Bienvenido')));
     component.loginForm.controls['email'].setValue('test@example.com');
     component.loginForm.controls['password'].setValue('password123');
     component.onSubmit();

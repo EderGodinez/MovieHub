@@ -12,28 +12,20 @@ describe('SeriesPageComponent', () => {
   beforeEach(async () => {
     const seriesServiceSpy = jasmine.createSpyObj('SeriesService', ['getAllSeries']);
     serie = {
-      "media_type": "serie",
-      "adult": false,
-      "public_image_path": "assets/images/public_images/the_witcher.jpg",
-      "id": 23,
-      "poster_path": "assets/images/posters/The_Witcher.webp",
-      "release_date": "2024-05-22",
-      "last_season": 1,
-      "platforms": [
-        "Netflix",
-        "Amazon Prime Video",
-        "HBO Max"
-      ],
-      "last_season_date": "2024-05-22",
-      "vote_average": 7.709,
-      "title": "The Witcher",
-      "popularity": 5432.98,
-      "genders": [
-        "Fantasía",
-        "Aventura",
-        "Drama"
-      ],
-      "overview": "Geralt de Rivia, un cazador de monstruos mutado, lucha por encontrar su lugar en un mundo donde a menudo las personas son más perversas que las bestias."
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller"
     } as Serie;
 
     await TestBed.configureTestingModule({

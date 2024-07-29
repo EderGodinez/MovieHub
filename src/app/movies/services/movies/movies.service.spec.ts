@@ -11,90 +11,72 @@ describe('MoviesService', () => {
   let service: MoviesService;
   let mockSeriesService: jasmine.SpyObj<SeriesService>;
   let mockSharedService: jasmine.SpyObj<SharedService>;
+
   let movieValidList: Movie[] = [{
-    "adult": false,
-    "public_image_path": "assets/images/public_images/jvPMJ2zM92jfXxVEFsqP1MMrLaO.jpg",
-    "genders": [
-      "Ciencia ficción",
-      "Acción",
-      "Aventura"
-    ],
-    "id": 6,
-    "original_title": "Godzilla x Kong: The New Empire",
-    "overview": "Una aventura cinematográfica completamente nueva, que enfrentará al todopoderoso Kong y al temible Godzilla contra una colosal amenaza desconocida escondida dentro de nuestro mundo. La nueva y épica película profundizará en las historias de estos titanes, sus orígenes y los misterios de Isla Calavera y más allá, mientras descubre la batalla mítica que ayudó a forjar a estos seres extraordinarios y los unió a la humanidad para siempre.",
-    "popularity": 1086.92,
-    "poster_path": "assets/images/posters/2YqZ6IyFk7menirwziJvfoVvSOh.jpg",
-    "release_date": "2024-03-27",
-    "title": "Godzilla y Kong: El nuevo imperio",
-    "vote_average": 7.214,
-    "media_type": "movie"
+    Id: 1,
+    Title: "Inception",
+    OriginalTitle: "Inception",
+    Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    ImagePath: "/images/inception.jpg",
+    PosterImage: "/posters/inception.jpg",
+    TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+    WatchLink: "https://www.example.com/watch/inception",
+    AddedDate: "2024-07-26T10:00:00Z",
+    TypeMedia: "movie",
+    RelaseDate: "2010-07-16T00:00:00Z",
+    AgeRate: "PG-13",
+    IsActive: true,
+    Genders: "Action, Sci-Fi, Thriller"
   },{
-    "adult": false,
-    "public_image_path": "assets/images/public_images/3ffPx9jqg0yj9y1KWeagT7D20CB.jpg",
-    "genders": [
-        "Animación",
-        "Acción",
-        "Familia",
-        "Comedia",
-        "Fantasía"
-    ],
-    "id": 13,
-    "original_title": "Kung Fu Panda 4",
-    "overview": "Po se está preparando para convertirse en el líder espiritual de su Valle de la Paz, pero también necesita a alguien que ocupe su lugar como Guerrero Dragón. Como tal, entrenará a un nuevo practicante de kung fu para el lugar y se encontrará con un villano llamado Camaleón que evoca villanos del pasado.",
-    "popularity": 768.435,
-    "poster_path": "assets/images/posters/zS8BSQdbOesql0EWbs17kPvLoAT.jpg",
-    "release_date": "2024-03-02",
-    "title": "Kung Fu Panda 4",
-    "vote_average": 7.127,
-    "media_type": "movie"
-}];
+    Id: 1,
+    Title: "Inception",
+    OriginalTitle: "Inception",
+    Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    ImagePath: "/images/inception.jpg",
+    PosterImage: "/posters/inception.jpg",
+    TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+    WatchLink: "https://www.example.com/watch/inception",
+    AddedDate: "2024-07-26T10:00:00Z",
+    TypeMedia: "movie",
+    RelaseDate: "2010-07-16T00:00:00Z",
+    AgeRate: "PG-13",
+    IsActive: true,
+    Genders: "Action, Sci-Fi, Thriller"
+  }];
   let mockSeriesList: Serie[] = [
     {
-      "media_type": "serie",
-      "adult": false,
-      "public_image_path": "assets/images/public_images/The_Office.jpg",
-      "id": 29,
-      "poster_path": "assets/images/posters/The_Office.jpg",
-      "release_date": "2024-05-22",
-      "last_season": 1,
-      "platforms": [
-        "Netflix",
-        "Amazon Prime Video",
-        "HBO Max"
-      ],
-      "last_season_date": "2024-05-22",
-      "vote_average": 7.709,
-      "title": "The Office",
-      "popularity": 4890.32,
-      "genders": [
-        "Comedia"
-      ],
-      "overview": "Una mirada cómica y a menudo absurda de la vida diaria en una oficina de la empresa Dunder Mifflin, centrada en los empleados y sus interacciones peculiares."
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller",
+      EpisodeList: []
     },
     {
-      "media_type": "serie",
-      "adult": false,
-      "public_image_path": "assets/images/public_images/Kimetsu_no_Yaiba.webp",
-      "id": 30,
-      "poster_path": "assets/images/posters/Kimetsu_no_Yaiba.jpg",
-      "release_date": "2024-05-22",
-      "last_season": 1,
-      "platforms": [
-        "Netflix",
-        "Amazon Prime Video",
-        "HBO Max"
-      ],
-      "last_season_date": "2024-05-22",
-      "vote_average": 7.709,
-      "title": "Kimetsu no Yaiba",
-      "popularity": 4890.32,
-      "genders": [
-        "Acción",
-        "Aventura",
-        "Drama",
-        "Sobrenatural"
-      ],
-      "overview": "Un joven bondadoso llamado Tanjiro Kamado se convierte en cazador de demonios después de que su familia es brutalmente asesinada por demonios. Acompañado por su hermana Nezuko, quien fue transformada en demonio, Tanjiro busca venganza y una cura para Nezuko mientras se enfrenta a poderosos enemigos y descubre oscuros secretos sobre el mundo de los demonios."
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller",
+      EpisodeList: []
     }
   ];
   let emptyMovieList: Movie[] = [];
@@ -127,7 +109,7 @@ describe('MoviesService', () => {
     spyOn(service['httpClient'], 'get').and.returnValue(of(dummyMovies));
     service.MoviesList.subscribe((movies) => {
       expect(movies.length).toBe(2);
-      expect(movies.every(movie => movie.media_type === 'movie')).toBeTrue();
+      expect(movies.every(movie => movie.TypeMedia === 'movie')).toBeTrue();
       done();
     });
   });
@@ -174,7 +156,6 @@ describe('MoviesService', () => {
 
     const movies = await service.getTrendingMovies();
     expect(movies.length).toBe(2);
-    expect(movies[0].popularity).toBeGreaterThan(movies[1].popularity);
   });
   it('should return empty list on error for getTrendingMovies', async () => {
     spyOnProperty(service, 'MoviesList', 'get').and.returnValue(throwError(() => new Error('Network error')));
@@ -187,7 +168,6 @@ describe('MoviesService', () => {
 
     const movies = await service.getMostPopularMovies();
     expect(movies.length).toBe(2);
-    expect(movies[0].popularity).toBeGreaterThan(movies[1].popularity);
   });
   it('should return empty list on error for getMostPopularMovies', async () => {
     spyOnProperty(service, 'MoviesList', 'get').and.returnValue(throwError(() => new Error('Network error')));

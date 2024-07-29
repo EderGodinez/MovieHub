@@ -12,19 +12,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 // Mock Services
 const mockMovie: Movie = {
-  id: 1,
-  title: 'Test Movie',
-  overview: 'Test Overview',
-  release_date: '2021-01-01',
-  poster_path: 'test.jpg',
-  adult: false,
-  genders: [],
-  public_image_path: 'test.jpg',
-  original_title: 'Test Movie',
-  popularity: 100,
-  vote_average: 10,
-  media_type: 'movie'
-};
+  Id: 1,
+  Title: "Inception",
+  OriginalTitle: "Inception",
+  Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+  ImagePath: "/images/inception.jpg",
+  PosterImage: "/posters/inception.jpg",
+  TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+  WatchLink: "https://www.example.com/watch/inception",
+  AddedDate: "2024-07-26T10:00:00Z",
+  TypeMedia: "movie",
+  RelaseDate: "2010-07-16T00:00:00Z",
+  AgeRate: "PG-13",
+  IsActive: true,
+  Genders: "Action, Sci-Fi, Thriller"
+}
 
 class MockMoviesService {
   GetAllMedia() {

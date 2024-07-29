@@ -8,32 +8,36 @@ describe('FunctionsService', () => {
 
   const mockMovies: Movie[] = [
     {
-      "adult": false,
-      "public_image_path": "assets/images/public_images/jvPMJ2zM92jfXxVEFsqP1MMrLaO.jpg",
-      "genders": ["Ciencia ficción", "Acción", "Aventura"],
-      "id": 1,
-      "original_title": "Dune",
-      "overview": "A spice planet is the focal point of a galactic battle.",
-      "popularity": 9.5,
-      "poster_path": "assets/images/posters/dune.jpg",
-      "release_date": "2021-09-03",
-      "title": "Dune",
-      "vote_average": 8.0,
-      "media_type": "movie"
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller"
     },
     {
-      "adult": false,
-      "public_image_path": "assets/images/public_images/someimage.jpg",
-      "genders": ["Acción", "Aventura"],
-      "id": 2,
-      "original_title": "Avengers: Endgame",
-      "overview": "The Avengers work to reverse the damage caused by Thanos.",
-      "popularity": 8.0,
-      "poster_path": "assets/images/posters/endgame.jpg",
-      "release_date": "2019-04-26",
-      "title": "Avengers: Endgame",
-      "vote_average": 8.4,
-      "media_type": "movie"
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller"
     }
   ];
 
@@ -86,7 +90,7 @@ describe('FunctionsService', () => {
     it('should filter movies based on query matching title', () => {
       const filteredMovies = service.FilterMedia('Dune', mockMovies);
       expect(filteredMovies.length).toBe(1);
-      expect(filteredMovies[0].title).toBe('Dune');
+      expect(filteredMovies[0].Title).toBe('Dune');
     });
 
     it('should filter movies based on query matching gender', () => {
@@ -97,7 +101,7 @@ describe('FunctionsService', () => {
     it('should filter movies based on query matching overview', () => {
       const filteredMovies = service.FilterMedia('reverse the damage', mockMovies);
       expect(filteredMovies.length).toBe(1);
-      expect(filteredMovies[0].title).toBe('Avengers: Endgame');
+      expect(filteredMovies[0].Title).toBe('Avengers: Endgame');
     });
 
     it('should return an empty array when no movies match the query', () => {

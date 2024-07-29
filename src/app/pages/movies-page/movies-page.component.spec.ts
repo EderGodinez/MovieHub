@@ -33,18 +33,20 @@ describe('MoviesPageComponent', () => {
     fixture.detectChanges();
 
     mockMovie = {
-      id: 1,
-      title: 'Mock Movie',
-      release_date: new Date().toISOString(),
-      popularity: 100,
-      genders: ['Action', 'Comedy'],
-      adult: false,
-      public_image_path: 'assets/images/public_images/wNAhuOZ3Zf84jCIlrcI6JhgmY5q.jpg',
-      original_title: 'Furiosa: A Mad Max Saga',
-      overview: 'Mock overview',
-      poster_path: 'assets/images/posters/tGHUlykWn9V2IIQ4ZaATIAq9VLB.jpg',
-      vote_average: 7.709,
-      media_type: 'movie'
+      Id: 1,
+      Title: "Inception",
+      OriginalTitle: "Inception",
+      Overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+      ImagePath: "/images/inception.jpg",
+      PosterImage: "/posters/inception.jpg",
+      TrailerLink: "https://www.youtube.com/watch?v=8hP9D6kZseM",
+      WatchLink: "https://www.example.com/watch/inception",
+      AddedDate: "2024-07-26T10:00:00Z",
+      TypeMedia: "movie",
+      RelaseDate: "2010-07-16T00:00:00Z",
+      AgeRate: "PG-13",
+      IsActive: true,
+      Genders: "Action, Sci-Fi, Thriller"
     } as Movie;
   });
 

@@ -28,7 +28,6 @@ export class UserService {
   }
   async UserLogin(email:string,password:string):Promise<string>{
     const result =firstValueFrom(this.HttpClient.post<LoginResponse>(`${environment.API_URL}users/login`,{email,password})).then((res)=>{
-      console.log(res.user);
       if(res.user){
         this.setCurrentUser({Name:res.user.Name,Email:res.user.Email,FavoritesMediaId:res.user.FavoritesMediaId});
         return `Bienvenido ${res.user.Name}`;
