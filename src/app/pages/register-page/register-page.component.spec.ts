@@ -67,7 +67,7 @@ describe('RegisterPageComponent', () => {
       Password: 'password123',
       ConfirmPassword: 'password123'
     });
-    mockUserService.register.and.returnValue('Usuario registrado');
+    mockUserService.register.and.returnValue(new Promise(resolve => resolve('Usuario registrado')));
     component.RegisterUser();
     expect(mockMessageService.add).toHaveBeenCalledWith({
       severity: 'success',
@@ -83,7 +83,7 @@ describe('RegisterPageComponent', () => {
       Password: 'password123',
       ConfirmPassword: 'password123'
     });
-    mockUserService.register.and.returnValue('El usuario ya existe');
+    mockUserService.register.and.returnValue(new Promise(resolve => resolve('error')));
     component.RegisterUser();
     expect(mockMessageService.add).toHaveBeenCalledWith({
       severity: 'error',
@@ -100,7 +100,7 @@ describe('RegisterPageComponent', () => {
       Password: 'password123',
       ConfirmPassword: 'password123'
     });
-    mockUserService.register.and.returnValue('Usuario registrado');
+    mockUserService.register.and.returnValue(new Promise(resolve => resolve('Usuario registrado')));
     component.RegisterUser();
     tick(3000);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/Inicio']);
@@ -135,7 +135,7 @@ describe('RegisterPageComponent', () => {
       Password: 'password123',
       ConfirmPassword: 'password123'
     });
-    mockUserService.register.and.returnValue('Usuario registrado');
+    mockUserService.register.and.returnValue(new Promise(resolve => resolve('Usuario registrado')));
     component.RegisterUser();
     expect(mockMessageService.add).toHaveBeenCalledWith({
       severity: 'success',

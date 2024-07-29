@@ -22,20 +22,22 @@ ngOnInit(): void {
   });
 }
 
-onSubmit() {
+async onSubmit() {
   this.loginForm.markAllAsTouched();
   if (this.loginForm.valid) {
     const {email,password} =this.loginForm.value
-    console.log(email,password);
-    const message=this.UserService.UserLogin(email,password);
+    const message=await this.UserService.UserLogin(email,password);
     console.log(message);
-    if(message==='Usuario o contraseña incorrectos'){
+    if(!message.includes('Bienvenido')){
       this.messageService.add({ severity: 'error', summary: 'Inicio de sesión', detail: message });
       return;
     }
     else{
-      this.messageService.add({ severity: 'success', summary: 'Inicio de sesión', detail: message });
-      this.Router.navigate(['/Inicio']);
+      console.log('entro');
+      this.messageService.add({ life:90000,severity: 'success', summary: 'Inicio de sesión', detail: message });
+      setTimeout(() => {
+        this.Router.navigate(['/Inicio']);
+      }, 100000);
     }
     return;
   }

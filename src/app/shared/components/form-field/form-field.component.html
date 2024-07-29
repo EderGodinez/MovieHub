@@ -1,8 +1,10 @@
-<div class="txt_field" >
+    <div class="txt_field" >
       <input
       [type]="type"
       [value]="value"
       [ngClass]="{ 'error_class': HasError }"
+      (input)="handleInput($event)"
+      (blur)="handleBlur()"
        required/>
       <span></span>
       <label>{{label}}</label>

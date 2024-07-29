@@ -15,7 +15,7 @@
         <a  class="item__user_sesion" (click)="op.toggle($event)" routerLink="login">Iniciar Sesion</a><span style="margin: 0.5rem;">|</span>
         <a  class="item__user_sesion"  (click)="op.toggle($event)" routerLink="register">Registrarte</a>
       </div>
-      <h5 *ngIf="getUser()!==null" style="color: rgb(0, 0, 0); margin: 10px 5px;">Bienvenido {{getUser()?.name|titlecase }}</h5>
+      <h5 *ngIf="getUser()!==null" style="color: rgb(0, 0, 0); margin: 10px 5px;">Bienvenido {{getUser()?.Name|titlecase }}</h5>
       <button  class="times_button" (click)="op.toggle($event)"><i class="bi bi-x"></i></button>
     </div>
     <hr style="margin: 0;" *ngIf="getUser()!==null">

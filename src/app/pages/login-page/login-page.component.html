@@ -1,4 +1,4 @@
-<p-toast position="bottom-right" key="bc"></p-toast>
+<p-toast position="top-center"></p-toast>
 <div class="center">
   <h1 >Iniciar Sesión</h1>
   <form  [formGroup]="loginForm" (submit)="onSubmit()">
@@ -10,7 +10,7 @@
       <form-field  [label]="'Contraseña'" [type]="'password'" formControlName="password" [HasError]="ValidateField('password')"/>
       <small style="color: red;"*ngIf="ValidateField('password')">{{GetFieldErrorMessage('password')}}</small>
     </div>
-    <div class="pass">Olvidaste la contraseña Password?</div>
+    <div class="pass">Olvidaste la contraseña?</div>
     <submit-button  [label]="'Login'"  />
     <div class="signup_link">¿No estas registrado? <a routerLink="/register">Registrate</a></div>
   </form>

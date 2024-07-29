@@ -1,4 +1,3 @@
-
 import { Component, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -17,8 +16,9 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class FormFieldComponent implements ControlValueAccessor {
   @Input() label: string = '';
   @Input() type: string = 'text';
-  @Input() value: string = '';
   @Input() HasError: boolean|null = false;
+
+  value: string = '';
 
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
@@ -37,5 +37,15 @@ export class FormFieldComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     // Implement if needed
+  }
+
+  handleInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.value = target.value;
+    this.onChange(this.value);
+  }
+
+  handleBlur(): void {
+    this.onTouched();
   }
 }
