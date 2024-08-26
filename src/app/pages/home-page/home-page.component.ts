@@ -28,8 +28,8 @@ ngOnInit(): void {
     this.Isloading = false;
   });
 }
-TrendingMovies:Movie[] = [];
-Movies:Movie[] = [];
-Series:Serie[] = [];
+TrendingMovies:any;
+Movies:any;
+Series:any;
 Isloading = true;
 }

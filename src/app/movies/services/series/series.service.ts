@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, delay, firstValueFrom, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Serie } from '../../interfaces/series.interface';
+import { Episode } from '../../interfaces/Episode.interface';
 
 @Injectable({providedIn: 'root'})
 export class SeriesService {
@@ -21,11 +22,40 @@ get SeriesList(): Observable<Serie[]> {
   return series;
   }
   async getAllSeries(): Promise<any[]> {
-    const series:Serie[]=await firstValueFrom(this.SeriesList.pipe(
+    const series:any[]=await firstValueFrom(this.SeriesList.pipe(
       delay(1000),
-      map((series:Serie[])=>series)
-    )).then((series:Serie[])=>series).catch(()=>[]) as Serie[];
-      return series;
+      map((series:any)=>series.$values)
+    )).then((series:any[])=>series).catch(()=>[]) as any[];
+    const FilterSeries: Serie[] = series.map(object => {
+      return {
+        Id: object.id,
+        Title: object.title,
+        OriginalTitle: object.originalTitle,
+        Overview: object.overview,
+        ImagePath: object.imagePath,
+        PosterImage: object.posterImage,
+        TrailerLink: object.trailerLink,
+        WatchLink: object.watchLink,
+        AddedDate: object.addedDate,
+        TypeMedia: object.typeMedia,
+        RelaseDate: object.relaseDate,
+        AgeRate: object.ageRate,
+        IsActive: object.isActive,
+        Genders: object.gendersLists.$values.join(", "),  // Joining the genders into a single string
+        EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+          Id: episode.Id,
+          Title: episode.Title,
+          Overview: episode.Overview,
+          E_Num: episode.E_Num,
+          Duration: episode.Duration,
+          ImagePath: episode.ImagePath,
+          AddedDate: episode.AddedDate,
+          WatchLink: episode.WatchLink,
+          RelaseDate: episode.RelaseDate
+        }))
+      } as Serie;
+    });
+      return FilterSeries;
   }
   async getTvShowbyId(id:any): Promise<Serie> {
     const series:Serie=await firstValueFrom(this.httpClient.get<Serie>(`${this.environments.API_URL}series/${id}`).pipe(

@@ -15,7 +15,27 @@ export class MoviesPageComponent {
     this.MoviesService.MoviesList.pipe(
       delay(1000)
     ).subscribe((data)=>{
-      this.MovieList = data;
+      const movies:any[]=data.$values;
+      const FilterMovies:Movie[]=movies.map(object=>{
+        return {
+          AddedDate:object._Media.addedDate,
+          AgeRate:object._Media.ageRate,
+          Genders:object.genderLists.$values.join(""),
+          Id:object._Media.id,
+          ImagePath:object._Media.imagePath,
+          Title:object._Media.title,
+          IsActive:object._Media.isActive,
+          OriginalTitle:object._Media.originalTitle,
+          RelaseDate:object._Media.relaseDate,
+          Overview:object._Media.overview,
+          Duration:object._Media.duration,
+          PosterImage:object._Media.posterImage,
+          TrailerLink:object._Media.trailerLink,
+          TypeMedia:object._Media.typeMedia,
+          WatchLink:object._Media.watchLink,
+        } as Movie;
+      })
+      this.MovieList = FilterMovies;
       this.Isloading = false;
     });
   }

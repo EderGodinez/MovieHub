@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: 'login', component:LoginPageComponent, canActivate: [authGuard] },
       // {path:'loading',component:LoadingComponent},
       { path: 'register', component:RegisterPageComponent, canActivate: [authGuard]},
-       { path: '**', redirectTo: 'Inicio' }
+      { path: '**', redirectTo: 'Inicio' }
     ]
   }
 ];

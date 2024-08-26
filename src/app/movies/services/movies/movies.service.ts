@@ -11,57 +11,96 @@ import { SharedService } from 'src/app/shared/service/shared.service';
 export class MoviesService {
   constructor(private httpClient: HttpClient,private readonly SeriesService:SeriesService,private FunctionsService:SharedService) { }
   environments = environment;
-get MoviesList(): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(`${this.environments.API_URL}movies`);
+get MoviesList(): Observable<any> {
+    return this.httpClient.get<any>(`${this.environments.API_URL}movies`);
   }
  async getMoviesByYear(year:number): Promise<Movie[]> {
   //Transformamos un observable en una promesa con firstValueFrom
-  const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
+  const movies:any[]=await firstValueFrom(this.MoviesList.pipe(
   delay(1000),
-  map((movies:Movie[])=>{
-    return movies.filter((movie:Movie)=>new Date(movie.RelaseDate).getFullYear()===year)
+  map(data=>data.$values),
+  map((movies:any[])=>{
+    return movies.filter((movie:any)=>new Date(movie._Media.relaseDate).getFullYear()===year)
   })
 )).then((movies:Movie[])=>{
   return movies;
 })
 .catch(()=>[]) as Movie[];
-  return movies;
+const FilterMovies:Movie[]=movies.map(object=>{
+  return {
+    AddedDate:object._Media.addedDate,
+    AgeRate:object._Media.ageRate,
+    Genders:object.genderLists.$values.join(""),
+    Id:object._Media.id,
+    ImagePath:object._Media.imagePath,
+    Title:object._Media.title,
+    IsActive:object._Media.isActive,
+    OriginalTitle:object._Media.originalTitle,
+    RelaseDate:object._Media.relaseDate,
+    Overview:object._Media.overview,
+    Duration:object._Media.duration,
+    PosterImage:object._Media.posterImage,
+    TrailerLink:object._Media.trailerLink,
+    TypeMedia:object._Media.typeMedia,
+    WatchLink:object._Media.watchLink,
+  } as Movie;
+})
+  return FilterMovies;
   }
-  async getTrendingMovies(): Promise<Movie[]> {
-    const movies:Movie[]=await firstValueFrom(this.httpClient.get<Movie[]>(`${this.environments.API_URL}trending`).pipe(
+  async getTrendingMovies(): Promise<any[]> {
+    const movies:any[]=await firstValueFrom(this.httpClient.get<any[]>(`${this.environments.API_URL}Movies/trending`).pipe(
       delay(1000),
-    )).then((movies:Movie[])=>{
-      return movies;
+    )).then((movies:any)=>{
+      return movies.$values;
     })
-      .catch(()=>[]) as Movie[];
-      return movies;
+    .catch(()=>[]) as Movie[];
+      const FilterMovies:Movie[]=movies.map(object=>{
+        return {
+          AddedDate:object.addedDate,
+          AgeRate:object.ageRate,
+          Id:object.id,
+          ImagePath:object.imagePath,
+          Title:object.title,
+          IsActive:object.isActive,
+          OriginalTitle:object.originalTitle,
+          RelaseDate:object.relaseDate,
+          Overview:object.overview,
+          Duration:object.duration,
+          PosterImage:object.posterImage,
+          TrailerLink:object.trailerLink,
+          TypeMedia:object.typeMedia,
+          WatchLink:object.watchLink,
+        } as Movie;
+      })
+
+        return FilterMovies;
   }
   //Obtenemos las 10 películas más populares
   //@ return Promise<Movie[]>
-  async getMostPopularMovies(): Promise<Movie[]> {
+  async getMostPopularMovies(): Promise<any[]> {
 
-    const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
+    const movies:any[]=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
-      map((movies:Movie[])=>movies.slice(0,10))
-    )).then((movies:Movie[])=>movies)
-    .catch(()=>[]) as Movie[];
+      map((movies:any[])=>movies.slice(0,10))
+    )).then((movies:any[])=>movies)
+    .catch(()=>[]) as any[];
       return movies;
   }
   //Obtenemos el objeto de la película por su id
   //@param id:number
   //@ return Promise<Movie>
-  async getMoviebyId(id:any): Promise<Movie> {
-    const movies:Movie=await firstValueFrom(this.httpClient.get<Movie>(`${this.environments.API_URL}movies/${id}`).pipe(
+  async getMoviebyId(id:any): Promise<any> {
+    const movies:Movie=await firstValueFrom(this.httpClient.get<any>(`${this.environments.API_URL}movies/${id}`).pipe(
       delay(1000),
     ))
     .then((movie:Movie|undefined)=>movie)
-    .catch(()=>null) as Movie;
+    .catch(()=>null) as any;
       return movies;
   }
   //Obtenemos las películas por género
    //@param genre:string
   //@ return Promise<Movie[]>
-  async getMoviesByGenre(genre:string): Promise<Movie[]> {
+  async getMoviesByGenre(genre:string): Promise<any[]> {
     const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
       map((movies:Movie[])=>movies.filter((movie:Movie)=>movie.Genders.includes(genre)))
@@ -69,7 +108,8 @@ get MoviesList(): Observable<Movie[]> {
     .then((movies:Movie[])=>movies)
     .catch(()=>[]) as Movie[];
       return movies;}
-      GetAllMedia():Observable<[Movie[], Serie[]]>{
+      GetAllMedia():Observable<[any, any]>{
+
         const movies= this.MoviesList
     const series= this.SeriesService.SeriesList
     return forkJoin([movies,series]).pipe(delay(1000));
