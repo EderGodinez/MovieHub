@@ -25,24 +25,25 @@ export class CategorysPageComponent implements OnInit{
 fecthData(){
   this.MoviesService.GetAllMedia().subscribe((data)=>{
     const movies:any[]=data[0].$values
-    const MoviesFull:Movie[]=movies.map(object=>{
+    const MoviesFull:Movie[]=movies.map((object:any)=>{
       return {
-        AddedDate:object.addedDate,
-        AgeRate:object.ageRate,
-        Id:object.id,
-        ImagePath:object.imagePath,
-        Title:object.title,
-        IsActive:object.isActive,
-        OriginalTitle:object.originalTitle,
-        RelaseDate:object.relaseDate,
-        Overview:object.overview,
+        Genders:object?.genderLists?.['$values'].join(", "),
+        AddedDate:object._Media.addedDate,
+        AgeRate:object._Media.ageRate,
+        Id:object._Media.id,
+        ImagePath:object._Media.imagePath,
+        Title:object._Media.title,
+        IsActive:object._Media.isActive,
+        OriginalTitle:object._Media.originalTitle,
+        RelaseDate:object._Media.relaseDate,
+        Overview:object._Media.overview,
         Duration:object.duration,
-        PosterImage:object.posterImage,
-        TrailerLink:object.trailerLink,
-        TypeMedia:object.typeMedia,
-        WatchLink:object.watchLink,
+        PosterImage:object._Media.posterImage,
+        TrailerLink:object._Media.trailerLink,
+        TypeMedia:object._Media.typeMedia,
+        WatchLink:object._Media.watchLink,
       } as Movie;
-    })
+    });
     const series:any[]=data[1].$values
     const SeriesFull: Serie[] = series.map(object => {
       return {
@@ -59,7 +60,7 @@ fecthData(){
         RelaseDate: object.relaseDate,
         AgeRate: object.ageRate,
         IsActive: object.isActive,
-        Genders: object.gendersLists.$values.join(", "),  // Joining the genders into a single string
+        Genders: object.gendersLists.$values.join(", "),
         EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
           Id: episode.Id,
           Title: episode.Title,
@@ -75,13 +76,11 @@ fecthData(){
     });
     const media_list=[...MoviesFull,...SeriesFull];
     const gendersList=this.FunctionsService.getAllUniqueGenders(media_list).slice(0,5);
-    console.log(gendersList);
     const categoriesPromises = gendersList.map((gender) => {
       const moviesPromise = this.MoviesService.getMoviesByGenre(gender);
       const seriesPromise = this.SeriesService.getTvShowsByGenre(gender);
       return Promise.all([moviesPromise, seriesPromise])
       .then(([movies, series]) => {
-        console.log(movies);
         const media = [...movies, ...series];
         this.Categories[gender] = media;
       });

@@ -26,23 +26,26 @@ export class SharedService {
     return Array.from(genderSet);
   }
 
-  FilterMedia(query: string, mediaList: Movie[]): Movie[] {
+  FilterMedia(query: string, mediaList: any[]): any[] {
     const lowerCaseQuery = query.toLowerCase();
     return mediaList.filter(media =>{
-      const ArrayGenders = media.Genders.split(',');
-      return media.Title.toLowerCase().includes(lowerCaseQuery) ||
+      console.log(media)
+      const ArrayGenders:any[] = media?.genderLists?.$values;
+      const Title:string=media.title?media.title:'';
+      const Overview:string=media?.overview?media.overview:''
+      return Title.toLowerCase().includes(lowerCaseQuery) ||
       ArrayGenders.some(gender => gender.toLowerCase().includes(lowerCaseQuery)) ||
-      media.Overview.toLowerCase().includes(lowerCaseQuery)
+      Overview.toLowerCase().includes(lowerCaseQuery)
     }
 
     );
   }
 
-  shuffle(array: Movie[]): Movie[] {
+  shuffle(array: any[]): any[] {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    return array as Movie[];
+    return array;
   }
 }

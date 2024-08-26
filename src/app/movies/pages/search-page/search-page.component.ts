@@ -32,7 +32,7 @@ searchMedia(query:string){
   this.Isloading=true;
     let media_list:Movie[]=[]
     this.MoviesService.GetAllMedia().subscribe((data)=>{
-      media_list=[...data[0],...data[1]];
+      media_list=[...data[0].$values,...data[1].$values];
       this.setMedia(this.FunctionsService.FilterMedia(query,media_list));
       this.Isloading=false;
       if(this.media_results.length===1){

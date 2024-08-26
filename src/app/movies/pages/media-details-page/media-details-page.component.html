@@ -10,11 +10,11 @@
       <div class="descripcion_movie">
         <div>
           <h1>{{MediaDitails.Title}}</h1>
-          <span *ngFor="let item of MediaDitails.Genders; let i = index">
-            {{item}}{{i < MediaDitails.Genders.length - 1 ? ' - ' : ''}}
+          <span>
+          *{{MediaDitails.Genders}}
           </span>
-          <p>{{MediaDitails.Overview}}</p>
-          <p>{{MediaDitails.RelaseDate}}</p>
+          <p>Descripcion: {{MediaDitails.Overview}}</p>
+          <p>Fecha de estreno: {{MediaDitails.RelaseDate|date}}</p>
           <!-- <p>IMB - {{MediaDitails?.vote_average}}</p> -->
         </div>
 

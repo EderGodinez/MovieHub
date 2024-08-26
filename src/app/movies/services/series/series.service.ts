@@ -60,6 +60,7 @@ get SeriesList(): Observable<Serie[]> {
   async getTvShowbyId(id:any): Promise<Serie> {
     const series:Serie=await firstValueFrom(this.httpClient.get<Serie>(`${this.environments.API_URL}series/${id}`).pipe(
       delay(1000),
+      tap((data)=>console.log(data))
     ))
     .then((series:Serie|undefined)=>series)
     .catch(()=>null) as Serie;
@@ -68,10 +69,42 @@ get SeriesList(): Observable<Serie[]> {
   async getTvShowsByGenre(genre:string): Promise<Serie[]> {
     const series:Serie[]=await firstValueFrom(this.SeriesList.pipe(
       delay(1000),
-      map((series:Serie[])=>series.filter((series:Serie)=>series.Genders.includes(genre)))
+      map((data:any)=>data.$values),
+      map((series:Serie[])=>series.filter((series:any)=>{
+        return series.gendersLists.$values.includes(genre)
+      }))
     ))
     .then((series:any)=>series)
     .catch(()=>[]) as Serie[];
-      return series;
+    const FilterSeries: Serie[] = series.map((object:any) => {
+      return {
+        Id: object.id,
+        Title: object.title,
+        OriginalTitle: object.originalTitle,
+        Overview: object.overview,
+        ImagePath: object.imagePath,
+        PosterImage: object.posterImage,
+        TrailerLink: object.trailerLink,
+        WatchLink: object.watchLink,
+        AddedDate: object.addedDate,
+        TypeMedia: object.typeMedia,
+        RelaseDate: object.relaseDate,
+        AgeRate: object.ageRate,
+        IsActive: object.isActive,
+        Genders: object.gendersLists.$values.join(", "),  // Joining the genders into a single string
+        EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+          Id: episode.Id,
+          Title: episode.Title,
+          Overview: episode.Overview,
+          E_Num: episode.E_Num,
+          Duration: episode.Duration,
+          ImagePath: episode.ImagePath,
+          AddedDate: episode.AddedDate,
+          WatchLink: episode.WatchLink,
+          RelaseDate: episode.RelaseDate
+        }))
+      } as Serie;
+    });
+      return FilterSeries;
   }
 }

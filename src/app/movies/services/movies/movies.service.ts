@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { Observable,map, delay, firstValueFrom, forkJoin } from 'rxjs';
+import { Observable,map, delay, firstValueFrom, forkJoin, tap } from 'rxjs';
 import { Movie } from '../../interfaces/movie.interface';
 import { SeriesService } from '../series/series.service';
 import { Serie } from '../../interfaces/series.interface';
@@ -90,24 +90,62 @@ const FilterMovies:Movie[]=movies.map(object=>{
   //@param id:number
   //@ return Promise<Movie>
   async getMoviebyId(id:any): Promise<any> {
-    const movies:Movie=await firstValueFrom(this.httpClient.get<any>(`${this.environments.API_URL}movies/${id}`).pipe(
+    const movie:any=await firstValueFrom(this.httpClient.get<any>(`${this.environments.API_URL}movies/${id}`).pipe(
       delay(1000),
     ))
     .then((movie:Movie|undefined)=>movie)
     .catch(()=>null) as any;
-      return movies;
+    return {
+      AddedDate:movie._Media.addedDate,
+      AgeRate:movie._Media.ageRate,
+      Genders:movie.genderLists.$values.join(", "),
+      Id:movie._Media.id,
+      ImagePath:movie._Media.imagePath,
+      Title:movie._Media.title,
+      IsActive:movie._Media.isActive,
+      OriginalTitle:movie._Media.originalTitle,
+      RelaseDate:movie._Media.relaseDate,
+      Overview:movie._Media.overview,
+      Duration:movie._Media.duration,
+      PosterImage:movie._Media.posterImage,
+      TrailerLink:movie._Media.trailerLink,
+      TypeMedia:movie._Media.typeMedia,
+      WatchLink:movie._Media.watchLink,
+    } as Movie;
+
   }
   //Obtenemos las películas por género
    //@param genre:string
   //@ return Promise<Movie[]>
   async getMoviesByGenre(genre:string): Promise<any[]> {
-    const movies:Movie[]=await firstValueFrom(this.MoviesList.pipe(
+    const movies:any[]=await firstValueFrom(this.MoviesList.pipe(
       delay(1000),
-      map((movies:Movie[])=>movies.filter((movie:Movie)=>movie.Genders.includes(genre)))
+      map(data=>data.$values),
+      map((movies:any[])=>movies.filter((movie:any)=>movie?.genderLists?.['$values'].join(", ").includes(genre)))
     ))
     .then((movies:Movie[])=>movies)
     .catch(()=>[]) as Movie[];
-      return movies;}
+    const FilterMovies:Movie[]=movies.map(object=>{
+      return {
+        AddedDate:object._Media.addedDate,
+        AgeRate:object._Media.ageRate,
+        Genders:object.genderLists.$values.join(""),
+        Id:object._Media.id,
+        ImagePath:object._Media.imagePath,
+        Title:object._Media.title,
+        IsActive:object._Media.isActive,
+        OriginalTitle:object._Media.originalTitle,
+        RelaseDate:object._Media.relaseDate,
+        Overview:object._Media.overview,
+        Duration:object._Media.duration,
+        PosterImage:object._Media.posterImage,
+        TrailerLink:object._Media.trailerLink,
+        TypeMedia:object._Media.typeMedia,
+        WatchLink:object._Media.watchLink,
+      } as Movie;
+    })
+    return FilterMovies
+    }
       GetAllMedia():Observable<[any, any]>{
 
         const movies= this.MoviesList

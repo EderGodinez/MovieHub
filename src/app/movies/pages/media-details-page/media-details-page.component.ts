@@ -7,6 +7,8 @@ import { UserService } from '../../../auth/services/user.service';
 import { MessageService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { SharedService } from 'src/app/shared/service/shared.service';
+import { Serie } from '../../interfaces/series.interface';
+import { Episode } from '../../interfaces/Episode.interface';
 
 
 @Component({
@@ -19,7 +21,7 @@ constructor(private readonly RouterActived:ActivatedRoute,private readonly Serie
   private readonly MoviesService:MoviesService,private readonly Router:Router,private readonly UserService:UserService,private MessageService:MessageService) { }
 
 MediaDitails!:Movie;
-MediaRecomendations:Movie[]=[];
+MediaRecomendations:Movie[]|Serie[]=[];
 Isloading = true;
   ngOnInit(): void {
     this.RouterActived.params.subscribe((params)=>{
@@ -35,10 +37,57 @@ Isloading = true;
       this.Router.navigate(['/Inicio']);
     });
     this.MoviesService.GetAllMedia().subscribe((data) => {
-      const combinedMedia = [...data[0], ...data[1]];
-      this.MediaRecomendations = this.FunctionsService.shuffle(combinedMedia)
-        .filter((media) => parseInt(media.Id.toString()) !== parseInt(id))
-        .slice(0, 10);
+      const combinedMedia = [...data[0].$values, ...data[1].$values];
+      const recomendations=this.FunctionsService.shuffle(combinedMedia)
+      .slice(0, 10);
+      this.MediaRecomendations=recomendations.map(object=>{
+        if(object.typeMedia==='series'){
+          return {
+            Id: object.id,
+            Title: object.title,
+            OriginalTitle: object.originalTitle,
+            Overview: object.overview,
+            ImagePath: object.imagePath,
+            PosterImage: object.posterImage,
+            TrailerLink: object.trailerLink,
+            WatchLink: object.watchLink,
+            AddedDate: object.addedDate,
+            TypeMedia: object.typeMedia,
+            RelaseDate: object.relaseDate,
+            AgeRate: object.ageRate,
+            IsActive: object.isActive,
+            Genders: object.gendersLists.$values.join(", "),  // Joining the genders into a single string
+            EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+              Id: episode.Id,
+              Title: episode.Title,
+              Overview: episode.Overview,
+              E_Num: episode.E_Num,
+              Duration: episode.Duration,
+              ImagePath: episode.ImagePath,
+              AddedDate: episode.AddedDate,
+              WatchLink: episode.WatchLink,
+              RelaseDate: episode.RelaseDate
+            }))
+          } as Serie;
+        }
+        return {
+          AddedDate:object._Media.addedDate,
+          AgeRate:object._Media.ageRate,
+          Genders:object.genderLists.$values.join(""),
+          Id:object._Media.id,
+          ImagePath:object._Media.imagePath,
+          Title:object._Media.title,
+          IsActive:object._Media.isActive,
+          OriginalTitle:object._Media.originalTitle,
+          RelaseDate:object._Media.relaseDate,
+          Overview:object._Media.overview,
+          Duration:object._Media.duration,
+          PosterImage:object._Media.posterImage,
+          TrailerLink:object._Media.trailerLink,
+          TypeMedia:object._Media.typeMedia,
+          WatchLink:object._Media.watchLink,
+        } as Movie;
+      })
     });
     forkJoin([mediaRequest, this.MoviesService.GetAllMedia()]).subscribe({
       next: () => this.Isloading = false,
