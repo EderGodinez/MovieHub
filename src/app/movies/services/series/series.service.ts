@@ -4,6 +4,7 @@ import { Observable, delay, firstValueFrom, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Serie } from '../../interfaces/series.interface';
 import { Episode } from '../../interfaces/Episode.interface';
+import { SerieResponse } from '../../interfaces/SerieResponse.interface';
 
 @Injectable({providedIn: 'root'})
 export class SeriesService {
@@ -57,13 +58,12 @@ get SeriesList(): Observable<Serie[]> {
     });
       return FilterSeries;
   }
-  async getTvShowbyId(id:any): Promise<Serie> {
-    const series:Serie=await firstValueFrom(this.httpClient.get<Serie>(`${this.environments.API_URL}series/${id}`).pipe(
+  async getTvShowbyId(id:any): Promise<SerieResponse> {
+    const series:SerieResponse=await firstValueFrom(this.httpClient.get<SerieResponse>(`${this.environments.API_URL}series/${id}`).pipe(
       delay(1000),
-      tap((data)=>console.log(data))
     ))
-    .then((series:Serie|undefined)=>series)
-    .catch(()=>null) as Serie;
+    .then((series:SerieResponse|undefined)=>series)
+    .catch(()=>null) as SerieResponse;
       return series;
   }
   async getTvShowsByGenre(genre:string): Promise<Serie[]> {

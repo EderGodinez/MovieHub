@@ -27,10 +27,13 @@ export class UserService {
     this.currentUserSubject.next(user);
   }
   async UserLogin(email:string,password:string):Promise<string>{
-    const result =firstValueFrom(this.HttpClient.post<LoginResponse>(`${environment.API_URL}users/login`,{email,password})).then((res)=>{
+    const result =firstValueFrom(this.HttpClient.post<LoginResponse>(`${environment.API_URL}user/login`,{email,password})).then((res)=>{
+      console.log(res.user.favoritesMediaId.$values);
       if(res.user){
-        this.setCurrentUser({Name:res.user.Name,Email:res.user.Email,FavoritesMediaId:res.user.FavoritesMediaId});
-        return `Bienvenido ${res.user.Name}`;
+        this.setCurrentUser({Name:res.user.name,Email:res.user.email,FavoritesMediaId:res.user.favoritesMediaId.$values,Id:res.user.id});
+        console.log('valor de usuario -----> ',this.currentUserValue);
+        localStorage.setItem('token',res.token);
+        return `Bienvenido ${res.user.name}`;
       }
       else{
         return res.message;
@@ -58,15 +61,11 @@ export class UserService {
 
   }
   logout(){
-   this.setCurrentUser(null);
+  this.setCurrentUser(null);
+    localStorage.removeItem('token');
   }
-  AddFavoriteMedia(mediaId:number){
-    if(this.currentUserValue){
-      if(!this.currentUserValue.FavoritesMediaId){
-        this.currentUserValue.FavoritesMediaId=[];
-      }
-      this.currentUserValue.FavoritesMediaId.push(mediaId);
-    }
+  AddFavoriteMedia(mediaId:number):Observable<string>{
+  return this.HttpClient.post<string>(`${environment.API_URL}user/${this.currentUserValue?.Id}/action?MediaId=${mediaId}&Action=L`,null);
   }
   removeFavoriteMedia(mediaId:number){
     if(this.currentUserValue){

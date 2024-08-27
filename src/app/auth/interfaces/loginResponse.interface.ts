@@ -1,6 +1,16 @@
-import { User } from "./User.interface";
+
 
 export interface LoginResponse {
     message:string,
-    user:User
+    user:userResponse,
+    token:string
+}
+
+interface userResponse
+{
+    id:number
+    name:string
+    email:string
+    role:string
+    favoritesMediaId:any
 }

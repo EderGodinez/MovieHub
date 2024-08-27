@@ -1,9 +1,19 @@
 <div class="container" *ngIf="!Isloading;else loading">
-  <h1>Favoritos</h1>
-  <article class="cards">
-    <movie-card *ngFor="let item of Favorites" [media]="item" ></movie-card>
-  </article>
+  <div *ngIf="Favorites.length>0;else empty" >
+    <h1>Favoritos</h1>
+    <article class="cards">
+      <movie-card *ngFor="let item of Favorites" [media]="item" ></movie-card>
+    </article>
+  </div>
+
+
 </div>
 <ng-template #loading>
   <loadingComponent/>
+</ng-template>
+<ng-template #empty>
+  <DIV style="display: flex; justify-content: center; align-items: center;">
+    <h1 style="position: absolute; top: 50%;">No hay peliculas o series dentro de tu listado de favoritos</h1>
+
+  </DIV>
 </ng-template>

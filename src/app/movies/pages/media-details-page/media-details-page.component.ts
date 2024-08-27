@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { Serie } from '../../interfaces/series.interface';
 import { Episode } from '../../interfaces/Episode.interface';
+import { SerieResponse } from '../../interfaces/SerieResponse.interface';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class MediaDetailsPageComponent implements OnInit{
 constructor(private readonly RouterActived:ActivatedRoute,private readonly SeriesService:SeriesService,private FunctionsService:SharedService,
   private readonly MoviesService:MoviesService,private readonly Router:Router,private readonly UserService:UserService,private MessageService:MessageService) { }
 
-MediaDitails!:Movie;
+MediaDitails!:Movie|Serie;
 MediaRecomendations:Movie[]|Serie[]=[];
 Isloading = true;
   ngOnInit(): void {
@@ -31,7 +32,25 @@ Isloading = true;
       ? this.MoviesService.getMoviebyId(id)
       : this.SeriesService.getTvShowbyId(id);
     mediaRequest.then((data) => {
-      this.MediaDitails = data;
+      if (type === 'series') {
+        this.MediaDitails = {
+          Id: data.id,
+          Title: data.title,
+          OriginalTitle: data.originalTitle,
+          Overview: data.overview,
+          ImagePath: data.imagePath,
+          PosterImage: data.posterImage,
+          TrailerLink: data.trailerLink,
+          WatchLink: data.watchLink,
+          AddedDate: data.addedDate,
+          TypeMedia: data.typeMedia,
+          RelaseDate: data.relaseDate,
+          AgeRate: data.ageRate,
+          IsActive: data.isActive
+        } as Serie;}
+        else{
+          this.MediaDitails = data;
+        }
     }).catch((error) => {
       console.error(error);
       this.Router.navigate(['/Inicio']);
@@ -56,7 +75,7 @@ Isloading = true;
             RelaseDate: object.relaseDate,
             AgeRate: object.ageRate,
             IsActive: object.isActive,
-            Genders: object.gendersLists.$values.join(", "),  // Joining the genders into a single string
+            Genders: object.gendersLists.$values.join(", "),
             EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
               Id: episode.Id,
               Title: episode.Title,
@@ -118,12 +137,34 @@ AddFavorite(){
 
   }
   else{
-    this.MessageService.add({ key: 'tc', severity: 'success', summary: 'Agregando a favoritos', detail: `${this.MediaDitails.Title} agregada` });
-    setTimeout(() => {
-      this.UserService.AddFavoriteMedia(this.MediaDitails.Id);
-      this.Router.navigate(['/Favoritos']);
-    }, 2000);
-
+    this.UserService.AddFavoriteMedia(this.MediaDitails.Id).subscribe({
+      next: (data) => {
+        this.MessageService.add({
+          key: 'tc',
+          severity: 'success',
+          summary: 'Agregando a favoritos',
+          detail: `${this.MediaDitails.Title} agregada`,
+          life: 2000
+        });
+      },
+      error: (err) => {
+        this.MessageService.add({
+          key: 'tc',
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error al agregar ${this.MediaDitails.Title} a favoritos: ${err.message}`,
+          life: 2000
+        });
+      },
+      complete: () => {
+        setTimeout(() => {
+          console.log("antes ",this.UserService.currentUserValue?.FavoritesMediaId);
+          this.UserService.currentUserValue?.FavoritesMediaId.push(this.MediaDitails.Id);
+          console.log("despues ",this.UserService.currentUserValue?.FavoritesMediaId);
+          this.Router.navigate(['/Favoritos']);
+        }, 2000);
+      }
+    });
   }
 
 }

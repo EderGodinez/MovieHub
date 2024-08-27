@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../services/movies/movies.service';
 import { Movie } from '../../interfaces/movie.interface';
 import { SharedService } from 'src/app/shared/service/shared.service';
+import { Serie } from '../../interfaces/series.interface';
+import { Episode } from '../../interfaces/Episode.interface';
 
 
 @Component({
@@ -21,8 +23,61 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
     })
 
   }
-  setMedia(Media:Movie[]){
-    this.media_results=Media;
+  setMedia(Media:any[]){
+    console.log(Media);
+    const FilterMovies:Movie[]|Serie[]=Media.map(object=>{
+      if (object.typeMedia) {
+        return {
+          Id: object.id,
+          Title: object.title,
+          OriginalTitle: object.originalTitle,
+          Overview: object.overview,
+          ImagePath: object.imagePath,
+          PosterImage: object.posterImage,
+          TrailerLink: object.trailerLink,
+          WatchLink: object.watchLink,
+          AddedDate: object.addedDate,
+          TypeMedia: object.typeMedia,
+          RelaseDate: object.relaseDate,
+          AgeRate: object.ageRate,
+          IsActive: object.isActive,
+          Genders: object.gendersLists.$values.join(", "), 
+          EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+            Id: episode.Id,
+            Title: episode.Title,
+            Overview: episode.Overview,
+            E_Num: episode.E_Num,
+            Duration: episode.Duration,
+            ImagePath: episode.ImagePath,
+            AddedDate: episode.AddedDate,
+            WatchLink: episode.WatchLink,
+            RelaseDate: episode.RelaseDate
+          }))
+        } as Serie;
+      }
+      else{
+        return {
+          AddedDate:object.addedDate,
+          AgeRate:object._Media.ageRate,
+          Genders:object.genderLists.$values.join(""),
+          Id:object._Media.id,
+          ImagePath:object._Media.imagePath,
+          Title:object._Media.title,
+          IsActive:object._Media.isActive,
+          OriginalTitle:object._Media.originalTitle,
+          RelaseDate:object._Media.relaseDate,
+          Overview:object._Media.overview,
+          Duration:object._Media.duration,
+          PosterImage:object._Media.posterImage,
+          TrailerLink:object._Media.trailerLink,
+          TypeMedia:object._Media.typeMedia,
+          WatchLink:object._Media.watchLink,
+        } as Movie;
+      }
+
+    })
+    console.log(FilterMovies);
+    this.media_results=FilterMovies;
   }
 media_results :Movie[]= [];
 Isloading = true;
@@ -34,6 +89,7 @@ searchMedia(query:string){
     this.MoviesService.GetAllMedia().subscribe((data)=>{
       media_list=[...data[0].$values,...data[1].$values];
       this.setMedia(this.FunctionsService.FilterMedia(query,media_list));
+
       this.Isloading=false;
       if(this.media_results.length===1){
         this.Router.navigate([`details/${this.media_results[0].TypeMedia}/${this.media_results[0].Id}`]);

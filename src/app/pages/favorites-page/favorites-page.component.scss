@@ -1,8 +1,10 @@
 .container{
   flex-direction: column;
   display: flex;
- gap: 20px;
- padding: 10px;
+  height: auto;
+  min-height: 70vh;
+  gap: 20px;
+  padding: 10px;
 }
 .cards{
   display: grid;

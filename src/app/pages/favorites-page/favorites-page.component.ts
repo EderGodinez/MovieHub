@@ -16,8 +16,8 @@ export class FavoritesPageComponent implements OnInit{
       this.Router.navigate(['/login']);
       return;
     }
-    const favoriteIds = this.UserService.currentUserValue?.FavoritesMediaId;
-    if (favoriteIds) {
+    const favoriteIds:number[] = this.UserService.currentUserValue?.FavoritesMediaId;
+    if (favoriteIds.length > 0) {
     Promise.all(favoriteIds.map((id) => this.MoviesService.getMoviebyId(id)))
     .then((movies) => {
       this.Favorites = movies;
@@ -32,6 +32,6 @@ export class FavoritesPageComponent implements OnInit{
       this.Isloading = false;
     }
 }
-Favorites:Movie[]=[];
+Favorites:any[]=[];
 Isloading = true;
 }

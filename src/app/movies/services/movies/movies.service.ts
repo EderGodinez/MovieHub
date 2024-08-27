@@ -6,6 +6,7 @@ import { Movie } from '../../interfaces/movie.interface';
 import { SeriesService } from '../series/series.service';
 import { Serie } from '../../interfaces/series.interface';
 import { SharedService } from 'src/app/shared/service/shared.service';
+import { Episode } from '../../interfaces/Episode.interface';
 
 @Injectable({providedIn: 'root'})
 export class MoviesService {
@@ -94,7 +95,39 @@ const FilterMovies:Movie[]=movies.map(object=>{
       delay(1000),
     ))
     .then((movie:Movie|undefined)=>movie)
-    .catch(()=>null) as any;
+    .catch(()=>this.SeriesService.getTvShowbyId(id).then(resp=>{
+      console.log(resp);
+      return resp;
+    })) as any;
+    if(movie.typeMedia==='series'){
+      return {
+        Id: movie.id,
+        Title: movie.title,
+        OriginalTitle: movie.originalTitle,
+        Overview: movie.overview,
+        ImagePath: movie.imagePath,
+        PosterImage: movie.posterImage,
+        TrailerLink: movie.trailerLink,
+        WatchLink: movie.watchLink,
+        AddedDate: movie.addedDate,
+        TypeMedia: movie.typeMedia,
+        RelaseDate: movie.relaseDate,
+        AgeRate: movie.ageRate,
+        IsActive: movie.isActive,
+        Genders: movie.gendersLists.$values.join(", "),  // Joining the genders into a single string
+        EpisodeList: movie.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+          Id: episode.Id,
+          Title: episode.Title,
+          Overview: episode.Overview,
+          E_Num: episode.E_Num,
+          Duration: episode.Duration,
+          ImagePath: episode.ImagePath,
+          AddedDate: episode.AddedDate,
+          WatchLink: episode.WatchLink,
+          RelaseDate: episode.RelaseDate
+        }))
+      } as Serie;
+    }
     return {
       AddedDate:movie._Media.addedDate,
       AgeRate:movie._Media.ageRate,

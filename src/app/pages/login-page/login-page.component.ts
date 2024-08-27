@@ -27,17 +27,15 @@ async onSubmit() {
   if (this.loginForm.valid) {
     const {email,password} =this.loginForm.value
     const message=await this.UserService.UserLogin(email,password);
-    console.log(message);
     if(!message.includes('Bienvenido')){
       this.messageService.add({ severity: 'error', summary: 'Inicio de sesión', detail: message });
       return;
     }
     else{
-      console.log('entro');
       this.messageService.add({ life:90000,severity: 'success', summary: 'Inicio de sesión', detail: message });
       setTimeout(() => {
         this.Router.navigate(['/Inicio']);
-      }, 100000);
+      }, 2000);
     }
     return;
   }

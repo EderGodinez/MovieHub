@@ -26,20 +26,19 @@ export class SharedService {
     return Array.from(genderSet);
   }
 
-  FilterMedia(query: string, mediaList: any[]): any[] {
+  FilterMedia(query: string, mediaList: any[]): Movie[] {
     const lowerCaseQuery = query.toLowerCase();
-    return mediaList.filter(media =>{
-      console.log(media)
-      const ArrayGenders:any[] = media?.genderLists?.$values;
-      const Title:string=media.title?media.title:'';
-      const Overview:string=media?.overview?media.overview:''
-      return Title.toLowerCase().includes(lowerCaseQuery) ||
-      ArrayGenders.some(gender => gender.toLowerCase().includes(lowerCaseQuery)) ||
-      Overview.toLowerCase().includes(lowerCaseQuery)
-    }
+    return mediaList.filter(media => {
+        // Verifica si 'genderLists' existe y tiene valores, sino regresa un array vacío
+        const ArrayGenders: any[] = media?.genderLists?.$values || [];
+        const Title: string = media.title ? media.title.toLowerCase() : '';
+        const Overview: string = media?.overview ? media.overview.toLowerCase() : '';
+        return Title.includes(lowerCaseQuery) ||
+               Overview.includes(lowerCaseQuery) ||
+               ArrayGenders.some(gender => gender.toLowerCase().includes(lowerCaseQuery));
+    });
+}
 
-    );
-  }
 
   shuffle(array: any[]): any[] {
     for (let i = array.length - 1; i > 0; i--) {

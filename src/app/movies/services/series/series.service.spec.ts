@@ -109,7 +109,7 @@ describe('SeriesService', () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(of(mockSeriesList));
     const series = await service.getTvShowbyId(29);
     expect(series).toBeTruthy();
-    expect(series.Id).toBe(29);
+    expect(series.id).toBe(29);
   });
   it('should return null on error for getTvShowbyId', async () => {
     spyOnProperty(service, 'SeriesList').and.returnValue(throwError(() => new Error('Network error')));
