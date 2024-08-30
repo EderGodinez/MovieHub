@@ -17,13 +17,13 @@ describe('FavoritesPageComponent', () => {
     mockMoviesService = jasmine.createSpyObj('MoviesService', ['getMoviebyId']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
-      declarations: [ FavoritesPageComponent ],
-      providers: [
+    imports: [FavoritesPageComponent],
+    providers: [
         { provide: UserService, useValue: mockUserService },
         { provide: MoviesService, useValue: mockMoviesService },
         { provide: Router, useValue: mockRouter }
-      ]
-    })
+    ]
+})
     .compileComponents();
   });
   beforeEach(() => {

@@ -5,11 +5,16 @@ import { Movie } from 'src/app/movies/interfaces/movie.interface';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { Serie } from 'src/app/movies/interfaces/series.interface';
 import { Episode } from 'src/app/movies/interfaces/Episode.interface';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
+import { MovieCarruselComponent } from '../../movies/components/movie-carrusel/movie-carrusel.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-categorys-page',
-  templateUrl: './categorys-page.component.html',
-  styleUrls: ['./categorys-page.component.scss']
+    selector: 'app-categorys-page',
+    templateUrl: './categorys-page.component.html',
+    styleUrls: ['./categorys-page.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, MovieCarruselComponent, LoadingComponent]
 })
 export class CategorysPageComponent implements OnInit{
   constructor(private readonly MoviesService:MoviesService,private readonly SeriesService:SeriesService,private FunctionsService:SharedService) { }

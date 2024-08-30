@@ -62,15 +62,14 @@ describe('CategorysPageComponent', () => {
     const sharedServiceSpy = jasmine.createSpyObj('SharedService', ['getAllUniqueGenders']);
 
     TestBed.configureTestingModule({
-      declarations: [CategorysPageComponent],
-      imports: [HttpClientTestingModule, SharedModule,MoviesModule,CommonModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+    imports: [HttpClientTestingModule, SharedModule, MoviesModule, CommonModule, CategorysPageComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [
         { provide: MoviesService, useValue: moviesServiceSpy },
         { provide: SeriesService, useValue: seriesServiceSpy },
         { provide: SharedService, useValue: sharedServiceSpy }
-      ]
-    });
+    ]
+});
     moviesService = TestBed.inject(MoviesService) as jasmine.SpyObj<MoviesService>;
     seriesService = TestBed.inject(SeriesService) as jasmine.SpyObj<SeriesService>;
     sharedService = TestBed.inject(SharedService) as jasmine.SpyObj<SharedService>;
@@ -108,7 +107,6 @@ describe('CategorysPageComponent', () => {
     await component.fecthData();
     fixture.detectChanges();
     const categoriesKeys = component.CategoriesKeys;
-    console.log(component.Isloading);
     expect(categoriesKeys.length).toBeGreaterThan(0);
     expect(categoriesKeys).toContain('Action');
   });

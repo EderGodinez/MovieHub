@@ -29,9 +29,9 @@ describe('SeriesPageComponent', () => {
     } as Serie;
 
     await TestBed.configureTestingModule({
-      declarations: [SeriesPageComponent],
-      providers: [{ provide: SeriesService, useValue: seriesServiceSpy }]
-    }).compileComponents();
+    imports: [SeriesPageComponent],
+    providers: [{ provide: SeriesService, useValue: seriesServiceSpy }]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SeriesPageComponent);
     component = fixture.componentInstance;

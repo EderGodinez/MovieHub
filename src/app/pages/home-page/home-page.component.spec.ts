@@ -51,18 +51,18 @@ describe('MoviesListPage', () => {
     const seriesServiceSpy = jasmine.createSpyObj('SeriesService', ['getAllSeries']);
 
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule
-      ],
-      declarations: [HomePageComponent],
-      providers: [
+    imports: [
+        SharedModule,
+        HomePageComponent
+    ],
+    providers: [
         { provide: MoviesService, useValue: moviesServiceSpy },
         { provide: SeriesService, useValue: seriesServiceSpy }
-      ],
-      schemas: [
+    ],
+    schemas: [
         CUSTOM_ELEMENTS_SCHEMA
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HomePageComponent);
     component = fixture.componentInstance;

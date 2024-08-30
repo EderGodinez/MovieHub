@@ -30,23 +30,22 @@ describe('RegisterPageComponent', () => {
     mockMessageService.add.and.callFake(() => {});
 
     await TestBed.configureTestingModule({
-      declarations: [RegisterPageComponent,
-        MockComponent(Toast)
-      ],
-      imports: [
+    imports: [
         ReactiveFormsModule,
         SharedModule,
-        PrimeNGModule,ToastModule
-      ],
-      providers: [
+        PrimeNGModule, ToastModule,
+        RegisterPageComponent,
+        MockComponent(Toast)
+    ],
+    providers: [
         FormBuilder,
         { provide: UserService, useValue: mockUserService },
         { provide: MessageService, useValue: mockMessageService },
         { provide: ValidatorService, useValue: mockValidatorService },
         { provide: Router, useValue: mockRouter }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] // Permite el uso de elementos personalizados
-    })
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA] // Permite el uso de elementos personalizados
+})
     .compileComponents();
   });
 

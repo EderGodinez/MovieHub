@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 import { MoviesService } from '../../movies/services/movies/movies.service';
 import { delay } from 'rxjs';
 import { Movie } from 'src/app/movies/interfaces/movie.interface';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
+import { MovieCardComponent } from '../../movies/components/movie-card/movie-card.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-movies-page',
-  templateUrl: './movies-page.component.html',
-  styleUrls: ['./movies-page.component.scss']
+    selector: 'app-movies-page',
+    templateUrl: './movies-page.component.html',
+    styleUrls: ['./movies-page.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, MovieCardComponent, LoadingComponent]
 })
 export class MoviesPageComponent {
   constructor(private readonly MoviesService:MoviesService) { }

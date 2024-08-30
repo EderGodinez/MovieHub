@@ -24,27 +24,26 @@ describe('LoginPageComponent', () => {
     mockMessageService = jasmine.createSpyObj('MessageService', ['add']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
-      declarations: [LoginPageComponent,
-        MockComponent(Toast)
-      ],
-      imports: [
+    imports: [
         PrimeNGModule,
         HttpClientTestingModule,
         SharedModule,
-        ReactiveFormsModule
-      ],
-      schemas: [
+        ReactiveFormsModule,
+        LoginPageComponent,
+        MockComponent(Toast)
+    ],
+    schemas: [
         CUSTOM_ELEMENTS_SCHEMA
-      ],
-      providers: [
+    ],
+    providers: [
         MessageService,
         FormBuilder,
         ValidatorService,
         { provide: UserService, useValue: mockUserService },
         { provide: MessageService, useValue: mockMessageService },
         { provide: Router, useValue: mockRouter }
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(LoginPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

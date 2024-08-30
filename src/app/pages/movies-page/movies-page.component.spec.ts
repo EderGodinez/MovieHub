@@ -17,15 +17,15 @@ describe('MoviesPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MoviesPageComponent],
-      imports: [
+    imports: [
         PrimeNGModule,
         HttpClientTestingModule,
-        SharedModule
-      ],
-      providers: [MoviesService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        SharedModule,
+        MoviesPageComponent
+    ],
+    providers: [MoviesService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MoviesPageComponent);
     component = fixture.componentInstance;

@@ -3,11 +3,16 @@ import { UserService } from 'src/app/auth/services/user.service';
 import { Movie } from 'src/app/movies/interfaces/movie.interface';
 import { MoviesService } from '../../movies/services/movies/movies.service';
 import { Router } from '@angular/router';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
+import { MovieCardComponent } from '../../movies/components/movie-card/movie-card.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-favorites-page',
-  templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.scss']
+    selector: 'app-favorites-page',
+    templateUrl: './favorites-page.component.html',
+    styleUrls: ['./favorites-page.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, MovieCardComponent, LoadingComponent]
 })
 export class FavoritesPageComponent implements OnInit{
   constructor(private readonly UserService:UserService,private readonly MoviesService:MoviesService,private Router:Router) { }
@@ -24,7 +29,6 @@ export class FavoritesPageComponent implements OnInit{
       this.Isloading = false;
     })
     .catch((error) => {
-      console.error('Error fetching favorite movies:', error);
       this.Isloading = false;
     });
     }
