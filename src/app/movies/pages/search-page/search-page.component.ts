@@ -5,12 +5,17 @@ import { Movie } from '../../interfaces/movie.interface';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { Serie } from '../../interfaces/series.interface';
 import { Episode } from '../../interfaces/Episode.interface';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
+import { NgIf, NgFor } from '@angular/common';
 
 
 @Component({
-  selector: 'app-search-page',
-  templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+    selector: 'app-search-page',
+    templateUrl: './search-page.component.html',
+    styleUrls: ['./search-page.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, MovieCardComponent, LoadingComponent]
 })
 export class SearchPageComponent implements OnInit{
 constructor(private route: ActivatedRoute, private MoviesService:MoviesService,private Router:Router,private FunctionsService:SharedService) {
@@ -24,7 +29,6 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
 
   }
   setMedia(Media:any[]){
-    console.log(Media);
     const FilterMovies:Movie[]|Serie[]=Media.map(object=>{
       if (object.typeMedia) {
         return {
@@ -41,7 +45,7 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
           RelaseDate: object.relaseDate,
           AgeRate: object.ageRate,
           IsActive: object.isActive,
-          Genders: object.gendersLists.$values.join(", "), 
+          Genders: object.gendersLists.$values.join(", "),
           EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
             Id: episode.Id,
             Title: episode.Title,
@@ -76,7 +80,6 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
       }
 
     })
-    console.log(FilterMovies);
     this.media_results=FilterMovies;
   }
 media_results :Movie[]= [];

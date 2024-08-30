@@ -20,31 +20,37 @@ describe('HeaderComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MoviesModule,
         RouterTestingModule.withRoutes([
-          { path: '', component: MainLayoutComponent, children: [
-            { path: 'Inicio', component: class {} },
-            { path: 'Generos', component: class {} },
-            { path: 'Favoritos', component: class {} },
-            { path: 'Series', component: class {} },
-            { path: 'Peliculas', component: class {} },
-            { path: 'details/:type/:id', component: class {} },
-            { path: 'search/:query', component: SearchPageComponent },
-            { path: 'login', component: class {} },
-            { path: 'register', component: class {} },
-            { path: '**', redirectTo: 'Inicio' }
-          ]}
+            { path: '', component: MainLayoutComponent, children: [
+                    { path: 'Inicio', component: class {
+                        } },
+                    { path: 'Generos', component: class {
+                        } },
+                    { path: 'Favoritos', component: class {
+                        } },
+                    { path: 'Series', component: class {
+                        } },
+                    { path: 'Peliculas', component: class {
+                        } },
+                    { path: 'details/:type/:id', component: class {
+                        } },
+                    { path: 'search/:query', component: SearchPageComponent },
+                    { path: 'login', component: class {
+                        } },
+                    { path: 'register', component: class {
+                        } },
+                    { path: '**', redirectTo: 'Inicio' }
+                ] }
         ]),
-      ],
-      declarations: [
         HeaderComponent,
-        MainLayoutComponent
-      ],
-      providers: [
+        MainLayoutComponent,
+    ],
+    providers: [
         { provide: UserService, useValue: userServiceStub }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

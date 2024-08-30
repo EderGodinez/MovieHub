@@ -48,15 +48,14 @@ describe('SearchPageComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const moviesServiceSpy = jasmine.createSpyObj('MoviesService', ['getMoviesByYear', 'getTrendingMovies', 'GetAllMedia']);
     await TestBed.configureTestingModule({
-      declarations: [SearchPageComponent],
-      providers: [
+    providers: [
         { provide: MoviesService, useClass: MockMoviesService },
         { provide: ActivatedRoute, useClass: MockActivatedRoute },
         { provide: Router, useValue: routerSpy }
-      ],
-      imports: [SharedModule,RouterTestingModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+    ],
+    imports: [SharedModule, RouterTestingModule, SearchPageComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
     .compileComponents();
 
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;

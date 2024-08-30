@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { CreateUser } from '../interfaces/RegisterUser.interface';
 import { LoginResponse } from '../interfaces/loginResponse.interface';
 import { UserRegisterResponse } from '../interfaces/UserRegisterResponse.interface';
+import { MediaListResponse } from '../interfaces/MediaListResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +29,8 @@ export class UserService {
   }
   async UserLogin(email:string,password:string):Promise<string>{
     const result =firstValueFrom(this.HttpClient.post<LoginResponse>(`${environment.API_URL}user/login`,{email,password})).then((res)=>{
-      console.log(res.user.favoritesMediaId.$values);
       if(res.user){
         this.setCurrentUser({Name:res.user.name,Email:res.user.email,FavoritesMediaId:res.user.favoritesMediaId.$values,Id:res.user.id});
-        console.log('valor de usuario -----> ',this.currentUserValue);
         localStorage.setItem('token',res.token);
         return `Bienvenido ${res.user.name}`;
       }
@@ -55,7 +54,6 @@ export class UserService {
     return result;
     }
     catch(error){
-      console.log(error);
       return 'Error al registrar usuario';
     }
 
@@ -66,6 +64,14 @@ export class UserService {
   }
   AddFavoriteMedia(mediaId:number):Observable<string>{
   return this.HttpClient.post<string>(`${environment.API_URL}user/${this.currentUserValue?.Id}/action?MediaId=${mediaId}&Action=L`,null);
+  }
+  MarkMediaView(mediaId:number):Observable<string>{
+    return this.HttpClient.post<string>(`${environment.API_URL}user/${this.currentUserValue?.Id}/action?MediaId=${mediaId}&Action=V`,null);
+    }
+  async getWatchedMediaIds():Promise<number[]>{
+  return firstValueFrom(this.HttpClient.get<MediaListResponse>(`${environment.API_URL}user/${this.currentUserValue?.Id}/view`)).then((res)=>{
+    return res.mediaView.$values;
+  });
   }
   removeFavoriteMedia(mediaId:number){
     if(this.currentUserValue){

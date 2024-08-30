@@ -87,16 +87,15 @@ describe('MoviesService', () => {
       SeriesList: of(mockSeriesList)
     });
     TestBed.configureTestingModule({
-      declarations: [],
-      imports: [
+    imports: [
         HttpClientTestingModule
-      ],
-      providers: [
+    ],
+    providers: [
         MoviesService,
         { provide: SeriesService, useValue: mockSeriesService },
         { provide: SharedService, useValue: mockSharedService }
-      ]
-    });
+    ]
+});
     service = TestBed.inject(MoviesService);
   });
 

@@ -8,8 +8,8 @@ describe('FormFieldComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FormFieldComponent]
-    });
+    imports: [FormFieldComponent]
+});
     fixture = TestBed.createComponent(FormFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

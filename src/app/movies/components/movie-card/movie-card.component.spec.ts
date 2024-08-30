@@ -12,12 +12,12 @@ describe('MovieCardComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const moviesServiceSpy = jasmine.createSpyObj('MoviesService', ['getMoviesByYear', 'getTrendingMovies']);
     await TestBed.configureTestingModule({
-      declarations: [MovieCardComponent],
-      providers: [
+    imports: [MovieCardComponent],
+    providers: [
         { provide: Router, useValue: routerSpy },
         { provide: MoviesService, useValue: moviesServiceSpy }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MovieCardComponent);
     component = fixture.componentInstance;

@@ -8,8 +8,8 @@ describe('MovieCarruselComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MovieCarruselComponent]
-    });
+    imports: [MovieCarruselComponent]
+});
     fixture = TestBed.createComponent(MovieCarruselComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

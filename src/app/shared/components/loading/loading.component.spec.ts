@@ -10,14 +10,14 @@ describe('LoadingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoadingComponent],
-      imports: [
-        PrimeNGModule
-      ],
-      schemas: [
+    imports: [
+        PrimeNGModule,
+        LoadingComponent
+    ],
+    schemas: [
         CUSTOM_ELEMENTS_SCHEMA
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(LoadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

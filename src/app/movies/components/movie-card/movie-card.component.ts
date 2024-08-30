@@ -3,9 +3,10 @@ import { Movie } from '../../interfaces/movie.interface';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'movie-card',
-  templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+    selector: 'movie-card',
+    templateUrl: './movie-card.component.html',
+    styleUrls: ['./movie-card.component.scss'],
+    standalone: true
 })
 export class MovieCardComponent{
   constructor(private readonly Router:Router) { }

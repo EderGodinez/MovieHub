@@ -7,7 +7,7 @@ export interface UserOptions{
   label:string
   action:()=>void
 }
- export class Options{
+  export class Options{
   constructor(private readonly Router:Router,private readonly UserService:UserService){}
   public  UserOp:UserOptions[]=[
     {
@@ -19,11 +19,11 @@ export interface UserOptions{
       }
     },
     {
-      icon:'bi bi-box2',
-      url:'Vistas',
-      label:'Vistas',
+      icon:'bi bi-eye',
+      url:'Vistos',
+      label:'Vistos',
       action:()=>{
-        this.Router.navigateByUrl('Vistas')
+        this.Router.navigate(['/Vistos']);
       }
     },
     {

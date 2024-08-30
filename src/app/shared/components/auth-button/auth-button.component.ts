@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'submit-button',
-  templateUrl: './auth-button.component.html',
-  styleUrls: ['./auth-button.component.scss']
+    selector: 'submit-button',
+    templateUrl: './auth-button.component.html',
+    styleUrls: ['./auth-button.component.scss'],
+    standalone: true
 })
 export class AuthButtonComponent {
 @Input() label: string = '';

@@ -10,12 +10,19 @@ import { SharedService } from 'src/app/shared/service/shared.service';
 import { Serie } from '../../interfaces/series.interface';
 import { Episode } from '../../interfaces/Episode.interface';
 import { SerieResponse } from '../../interfaces/SerieResponse.interface';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { MovieCarruselComponent } from '../../components/movie-carrusel/movie-carrusel.component';
+import { ButtonModule } from 'primeng/button';
+import { NgIf, DatePipe } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
 
 
 @Component({
-  selector: 'app-media-details-page',
-  templateUrl: './media-details-page.component.html',
-  styleUrls: ['./media-details-page.component.scss']
+    selector: 'app-media-details-page',
+    templateUrl: './media-details-page.component.html',
+    styleUrls: ['./media-details-page.component.scss'],
+    standalone: true,
+    imports: [ToastModule, NgIf, ButtonModule, MovieCarruselComponent, LoadingComponent, DatePipe]
 })
 export class MediaDetailsPageComponent implements OnInit{
 constructor(private readonly RouterActived:ActivatedRoute,private readonly SeriesService:SeriesService,private FunctionsService:SharedService,
@@ -52,7 +59,7 @@ Isloading = true;
           this.MediaDitails = data;
         }
     }).catch((error) => {
-      console.error(error);
+      error(error);
       this.Router.navigate(['/Inicio']);
     });
     this.MoviesService.GetAllMedia().subscribe((data) => {
@@ -158,9 +165,7 @@ AddFavorite(){
       },
       complete: () => {
         setTimeout(() => {
-          console.log("antes ",this.UserService.currentUserValue?.FavoritesMediaId);
           this.UserService.currentUserValue?.FavoritesMediaId.push(this.MediaDitails.Id);
-          console.log("despues ",this.UserService.currentUserValue?.FavoritesMediaId);
           this.Router.navigate(['/Favoritos']);
         }, 2000);
       }
@@ -176,7 +181,31 @@ ShowMovie(){
     }, 2000);
   }
   else{
-    this.MessageService.add({ key: 'tc', severity: 'info', summary: 'Ver Pelicula', detail: 'Estamos trabajando en esta funcionalidad' });
+    this.UserService.AddFavoriteMedia(this.MediaDitails.Id).subscribe({
+      next: (data) => {
+        this.MessageService.add({
+          key: 'tc',
+          severity: 'success',
+          summary: 'Agregando a contendido visto',
+          detail: `${this.MediaDitails.Title} agregada`,
+          life: 2000
+        });
+      },
+      error: (err) => {
+        this.MessageService.add({
+          key: 'tc',
+          severity: 'error',
+          summary: 'Error',
+          detail: `Error al agregar ${this.MediaDitails.Title} a contenido visto: ${err.message}`,
+          life: 2000
+        });
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.Router.navigate(['/Vistos']);
+        }, 2000);
+      }
+    });
   }
 }
 }

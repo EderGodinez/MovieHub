@@ -90,32 +90,78 @@ const FilterMovies:Movie[]=movies.map(object=>{
   //Obtenemos el objeto de la película por su id
   //@param id:number
   //@ return Promise<Movie>
-  async getMoviebyId(id:any): Promise<any> {
-    const movie:any=await firstValueFrom(this.httpClient.get<any>(`${this.environments.API_URL}movies/${id}`).pipe(
-      delay(1000),
-    ))
-    .then((movie:Movie|undefined)=>movie)
-    .catch(()=>this.SeriesService.getTvShowbyId(id).then(resp=>{
-      console.log(resp);
-      return resp;
-    })) as any;
-    if(movie.typeMedia==='series'){
+  async getMoviebyId(id: any): Promise<any> {
+    try {
+      const movie: any = await firstValueFrom(this.httpClient.get<any>(`${this.environments.API_URL}movies/${id}`).pipe(
+        delay(1000)
+      ));
+      if (movie.typeMedia === 'series') {
+        return {
+          Id: movie.id,
+          Title: movie.title,
+          OriginalTitle: movie.originalTitle,
+          Overview: movie.overview,
+          ImagePath: movie.imagePath,
+          PosterImage: movie.posterImage,
+          TrailerLink: movie.trailerLink,
+          WatchLink: movie.watchLink,
+          AddedDate: movie.addedDate,
+          TypeMedia: movie.typeMedia,
+          RelaseDate: movie.relaseDate,
+          AgeRate: movie.ageRate,
+          IsActive: movie.isActive,
+          Genders: movie.gendersLists.$values.join(", "),  // Unir los géneros en una sola cadena
+          EpisodeList: movie.seasons.$values[0].episodes.$values.map((episode: Episode) => ({
+            Id: episode.Id,
+            Title: episode.Title,
+            Overview: episode.Overview,
+            E_Num: episode.E_Num,
+            Duration: episode.Duration,
+            ImagePath: episode.ImagePath,
+            AddedDate: episode.AddedDate,
+            WatchLink: episode.WatchLink,
+            RelaseDate: episode.RelaseDate
+          }))
+        } as Serie;
+      }
+
+      // Si es una película, estructurarlo como Movie
       return {
-        Id: movie.id,
-        Title: movie.title,
-        OriginalTitle: movie.originalTitle,
-        Overview: movie.overview,
-        ImagePath: movie.imagePath,
-        PosterImage: movie.posterImage,
-        TrailerLink: movie.trailerLink,
-        WatchLink: movie.watchLink,
-        AddedDate: movie.addedDate,
-        TypeMedia: movie.typeMedia,
-        RelaseDate: movie.relaseDate,
-        AgeRate: movie.ageRate,
-        IsActive: movie.isActive,
-        Genders: movie.gendersLists.$values.join(", "),  // Joining the genders into a single string
-        EpisodeList: movie.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+        AddedDate: movie._Media.addedDate,
+        AgeRate: movie._Media.ageRate,
+        Genders: movie.genderLists.$values.join(", "),
+        Id: movie._Media.id,
+        ImagePath: movie._Media.imagePath,
+        Title: movie._Media.title,
+        IsActive: movie._Media.isActive,
+        OriginalTitle: movie._Media.originalTitle,
+        RelaseDate: movie._Media.relaseDate,
+        Overview: movie._Media.overview,
+        Duration: movie._Media.duration,
+        PosterImage: movie._Media.posterImage,
+        TrailerLink: movie._Media.trailerLink,
+        TypeMedia: movie._Media.typeMedia,
+        WatchLink: movie._Media.watchLink,
+      } as Movie;
+
+    } catch (e) {
+      const series = await this.SeriesService.getTvShowbyId(id);
+      return {
+        Id: series.id,
+        Title: series.title,
+        OriginalTitle: series.originalTitle,
+        Overview: series.overview,
+        ImagePath: series.imagePath,
+        PosterImage: series.posterImage,
+        TrailerLink: series.trailerLink,
+        WatchLink: series.watchLink,
+        AddedDate: series.addedDate,
+        TypeMedia: series.typeMedia,
+        RelaseDate: series.relaseDate,
+        AgeRate: series.ageRate,
+        IsActive: series.isActive,
+        Genders: series.gendersLists.$values.join(", "),  // Unir los géneros en una sola cadena
+        EpisodeList: series.seasons.$values[0].episodes.$values.map((episode: any) => ({
           Id: episode.Id,
           Title: episode.Title,
           Overview: episode.Overview,
@@ -128,25 +174,8 @@ const FilterMovies:Movie[]=movies.map(object=>{
         }))
       } as Serie;
     }
-    return {
-      AddedDate:movie._Media.addedDate,
-      AgeRate:movie._Media.ageRate,
-      Genders:movie.genderLists.$values.join(", "),
-      Id:movie._Media.id,
-      ImagePath:movie._Media.imagePath,
-      Title:movie._Media.title,
-      IsActive:movie._Media.isActive,
-      OriginalTitle:movie._Media.originalTitle,
-      RelaseDate:movie._Media.relaseDate,
-      Overview:movie._Media.overview,
-      Duration:movie._Media.duration,
-      PosterImage:movie._Media.posterImage,
-      TrailerLink:movie._Media.trailerLink,
-      TypeMedia:movie._Media.typeMedia,
-      WatchLink:movie._Media.watchLink,
-    } as Movie;
-
   }
+
   //Obtenemos las películas por género
    //@param genre:string
   //@ return Promise<Movie[]>

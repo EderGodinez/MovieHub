@@ -1,17 +1,20 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'form-field',
-  templateUrl: './form-field.component.html',
-  styleUrls: ['./form-field.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormFieldComponent),
-      multi: true
-    }
-  ]
+    selector: 'form-field',
+    templateUrl: './form-field.component.html',
+    styleUrls: ['./form-field.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => FormFieldComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [NgClass]
 })
 export class FormFieldComponent implements ControlValueAccessor {
   @Input() label: string = '';

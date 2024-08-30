@@ -12,26 +12,24 @@ import { SharedService } from './service/shared.service';
 
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    AuthButtonComponent,
-    FormFieldComponent,
-    LoadingComponent,
-  ],
-  imports: [
-    CommonModule,
-    PrimeNGModule,
-    RouterModule
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    AuthButtonComponent,
-    FormFieldComponent,
-    LoadingComponent
-  ],
-  providers: [SharedService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    imports: [
+        CommonModule,
+        PrimeNGModule,
+        RouterModule,
+        HeaderComponent,
+        FooterComponent,
+        AuthButtonComponent,
+        FormFieldComponent,
+        LoadingComponent
+    ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        AuthButtonComponent,
+        FormFieldComponent,
+        LoadingComponent
+    ],
+    providers: [SharedService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

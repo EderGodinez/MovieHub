@@ -53,9 +53,8 @@ describe('MediaDetailsPageComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [MediaDetailsPageComponent,MockComponent(Toast)],
-      imports: [HttpClientTestingModule, RouterTestingModule,PrimeNGModule],
-      providers: [
+    imports: [HttpClientTestingModule, RouterTestingModule, PrimeNGModule, MediaDetailsPageComponent, MockComponent(Toast)],
+    providers: [
         { provide: SeriesService, useValue: seriesService },
         { provide: MoviesService, useValue: moviesService },
         { provide: UserService, useValue: userService },
@@ -63,9 +62,9 @@ describe('MediaDetailsPageComponent', () => {
         { provide: MessageService, useValue: messageService },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: router }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MediaDetailsPageComponent);
     component = fixture.componentInstance;

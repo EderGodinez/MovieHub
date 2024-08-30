@@ -11,14 +11,14 @@ describe('MainLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainLayoutComponent],
-      imports: [
+    imports: [
         SharedModule,
         RouterTestingModule,
-        PrimeNGModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        PrimeNGModule,
+        MainLayoutComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;

@@ -11,22 +11,20 @@ import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 
 @NgModule({
-    declarations: [
-        HomePageComponent,
-        MovieCardComponent,
-        MovieCarruselComponent,
-        SearchPageComponent,
-        MediaDetailsPageComponent
-    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [
-      MovieCardComponent,
+        MovieCardComponent,
         MovieCarruselComponent
     ],
     imports: [
         CommonModule,
         SharedModule,
-        PrimeNGModule
+        PrimeNGModule,
+        HomePageComponent,
+        MovieCardComponent,
+        MovieCarruselComponent,
+        SearchPageComponent,
+        MediaDetailsPageComponent
     ]
 })
 export class MoviesModule { }
