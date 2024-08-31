@@ -63,10 +63,12 @@ Isloading = true;
       this.Router.navigate(['/Inicio']);
     });
     this.MoviesService.GetAllMedia().subscribe((data) => {
-      const combinedMedia = [...data[0].$values, ...data[1].$values];
+      const combinedMedia = [...data[0], ...data[1]];
       const recomendations=this.FunctionsService.shuffle(combinedMedia)
       .slice(0, 10);
+      console.log(recomendations);
       this.MediaRecomendations=recomendations.map(object=>{
+        console.log(object);
         if(object.typeMedia==='series'){
           return {
             Id: object.id,
@@ -96,23 +98,7 @@ Isloading = true;
             }))
           } as Serie;
         }
-        return {
-          AddedDate:object._Media.addedDate,
-          AgeRate:object._Media.ageRate,
-          Genders:object.genderLists.$values.join(""),
-          Id:object._Media.id,
-          ImagePath:object._Media.imagePath,
-          Title:object._Media.title,
-          IsActive:object._Media.isActive,
-          OriginalTitle:object._Media.originalTitle,
-          RelaseDate:object._Media.relaseDate,
-          Overview:object._Media.overview,
-          Duration:object._Media.duration,
-          PosterImage:object._Media.posterImage,
-          TrailerLink:object._Media.trailerLink,
-          TypeMedia:object._Media.typeMedia,
-          WatchLink:object._Media.watchLink,
-        } as Movie;
+        return object;
       })
     });
     forkJoin([mediaRequest, this.MoviesService.GetAllMedia()]).subscribe({
@@ -165,7 +151,7 @@ AddFavorite(){
       },
       complete: () => {
         setTimeout(() => {
-          this.UserService.currentUserValue?.FavoritesMediaId.push(this.MediaDitails.Id);
+          this.UserService.currentUserValue?.FavoritesMediaId.push(this.MediaDitails.Id.toString());
           this.Router.navigate(['/Favoritos']);
         }, 2000);
       }

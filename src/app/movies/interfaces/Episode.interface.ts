@@ -5,8 +5,8 @@ export interface Episode {
   Overview: string
   Duration: string
   ImagePath: string
-  AddedDate: string
-  RelaseDate?: string
+  AddedDate: Date
+  RelaseDate: Date
   WatchLink?: string
 }
 

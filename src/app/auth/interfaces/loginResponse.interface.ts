@@ -12,5 +12,5 @@ interface userResponse
     name:string
     email:string
     role:string
-    favoritesMediaId:any
+    favoritesMediaId:string[]
 }

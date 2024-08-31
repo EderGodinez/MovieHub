@@ -8,6 +8,8 @@ import { Episode } from 'src/app/movies/interfaces/Episode.interface';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { MovieCarruselComponent } from '../../movies/components/movie-carrusel/movie-carrusel.component';
 import { NgIf, NgFor } from '@angular/common';
+import { MediaMovieResponse } from 'src/app/movies/interfaces/MediaMovieResponse.interface';
+import { SerieResponse, Value2 } from 'src/app/movies/interfaces/SerieResponse.interface';
 
 @Component({
     selector: 'app-categorys-page',
@@ -29,54 +31,55 @@ export class CategorysPageComponent implements OnInit{
 }
 fecthData(){
   this.MoviesService.GetAllMedia().subscribe((data)=>{
-    const movies:any[]=data[0].$values
-    const MoviesFull:Movie[]=movies.map((object:any)=>{
+    const movies:Movie[]=data[0]
+    const MoviesFull:Movie[]=movies.map((object:Movie)=>{
       return {
-        Genders:object?.genderLists?.['$values'].join(", "),
-        AddedDate:object._Media.addedDate,
-        AgeRate:object._Media.ageRate,
-        Id:object._Media.id,
-        ImagePath:object._Media.imagePath,
-        Title:object._Media.title,
-        IsActive:object._Media.isActive,
-        OriginalTitle:object._Media.originalTitle,
-        RelaseDate:object._Media.relaseDate,
-        Overview:object._Media.overview,
-        Duration:object.duration,
-        PosterImage:object._Media.posterImage,
-        TrailerLink:object._Media.trailerLink,
-        TypeMedia:object._Media.typeMedia,
-        WatchLink:object._Media.watchLink,
+        Genders:object?.Genders,
+        AddedDate:object.AddedDate,
+        AgeRate:object.AgeRate,
+        Id:object.Id,
+        ImagePath:object.ImagePath,
+        Title:object.Title,
+        IsActive:object.IsActive,
+        OriginalTitle:object.OriginalTitle,
+        RelaseDate:object.RelaseDate,
+        Overview:object.Overview,
+        Duration:object.Duration,
+        PosterImage:object.PosterImage,
+        TrailerLink:object.TrailerLink,
+        TypeMedia:object.TypeMedia,
+        WatchLink:object.WatchLink,
       } as Movie;
     });
-    const series:any[]=data[1].$values
+    const series:Serie[]=data[1]
+    console.log(series);
     const SeriesFull: Serie[] = series.map(object => {
       return {
-        Id: object.id,
-        Title: object.title,
-        OriginalTitle: object.originalTitle,
-        Overview: object.overview,
-        ImagePath: object.imagePath,
-        PosterImage: object.posterImage,
-        TrailerLink: object.trailerLink,
-        WatchLink: object.watchLink,
-        AddedDate: object.addedDate,
-        TypeMedia: object.typeMedia,
-        RelaseDate: object.relaseDate,
-        AgeRate: object.ageRate,
-        IsActive: object.isActive,
-        Genders: object.gendersLists.$values.join(", "),
-        EpisodeList: object.seasons.$values[0].episodes.$values.map((episode:Episode) => ({
+        Id: object.Id,
+        Title: object.Title,
+        OriginalTitle: object.OriginalTitle,
+        Overview: object.Overview,
+        ImagePath: object.ImagePath,
+        PosterImage: object.PosterImage,
+        TrailerLink: object.TrailerLink,
+        WatchLink: object.WatchLink,
+        AddedDate: object.AddedDate,
+        TypeMedia: object.TypeMedia,
+        RelaseDate: object.RelaseDate,
+        AgeRate: object.AgeRate,
+        IsActive: object.IsActive,
+        Genders: object.Genders,
+        EpisodeList: object.EpisodeList?.map((episode) => ({
           Id: episode.Id,
           Title: episode.Title,
           Overview: episode.Overview,
           E_Num: episode.E_Num,
           Duration: episode.Duration,
           ImagePath: episode.ImagePath,
-          AddedDate: episode.AddedDate,
+          AddedDate: new Date(episode.AddedDate),
           WatchLink: episode.WatchLink,
-          RelaseDate: episode.RelaseDate
-        }))
+          RelaseDate: new Date(episode.RelaseDate)
+      }) as Episode)
       } as Serie;
     });
     const media_list=[...MoviesFull,...SeriesFull];

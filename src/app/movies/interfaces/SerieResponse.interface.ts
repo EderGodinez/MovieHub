@@ -16,7 +16,7 @@ export interface SerieResponse {
   gendersLists: GendersLists
   mediaAvailibleIns: MediaAvailibleIns
   seasons: Seasons
-  rating: any
+  rating: number
   votes: number
 }
 

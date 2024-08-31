@@ -18,7 +18,9 @@ export class HomePageComponent implements OnInit {
 ngOnInit(): void {
   this.Isloading = true;
   const moviesPromise = this.MoviesService.getMoviesByYear(2024)
-    .then(movies => this.Movies = movies)
+    .then(movies => {
+      this.Movies = movies;
+    })
     .catch(() => this.Movies = []);
 
   const trendingMoviesPromise = this.MoviesService.getTrendingMovies()
@@ -33,8 +35,8 @@ ngOnInit(): void {
     this.Isloading = false;
   });
 }
-TrendingMovies:any;
-Movies:any;
-Series:any;
+TrendingMovies:Movie[] = [];
+Movies:Movie[] = [];
+Series:Serie[] = [];
 Isloading = true;
 }

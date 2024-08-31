@@ -59,26 +59,7 @@ constructor(private route: ActivatedRoute, private MoviesService:MoviesService,p
           }))
         } as Serie;
       }
-      else{
-        return {
-          AddedDate:object.addedDate,
-          AgeRate:object._Media.ageRate,
-          Genders:object.genderLists.$values.join(""),
-          Id:object._Media.id,
-          ImagePath:object._Media.imagePath,
-          Title:object._Media.title,
-          IsActive:object._Media.isActive,
-          OriginalTitle:object._Media.originalTitle,
-          RelaseDate:object._Media.relaseDate,
-          Overview:object._Media.overview,
-          Duration:object._Media.duration,
-          PosterImage:object._Media.posterImage,
-          TrailerLink:object._Media.trailerLink,
-          TypeMedia:object._Media.typeMedia,
-          WatchLink:object._Media.watchLink,
-        } as Movie;
-      }
-
+      return object;
     })
     this.media_results=FilterMovies;
   }
@@ -90,7 +71,7 @@ searchMedia(query:string){
   this.Isloading=true;
     let media_list:Movie[]=[]
     this.MoviesService.GetAllMedia().subscribe((data)=>{
-      media_list=[...data[0].$values,...data[1].$values];
+      media_list=[...data[0],...data[1]];
       this.setMedia(this.FunctionsService.FilterMedia(query,media_list));
 
       this.Isloading=false;

@@ -18,6 +18,9 @@ export class SharedService {
   getAllUniqueGenders(mediaList: Movie[]): string[] {
     const genderSet = new Set<string>();
     mediaList.forEach(media => {
+      if (!media.Genders) {
+        return;
+      }
       const ArrayGenders = media.Genders.split(',');
       ArrayGenders.forEach(gender => {
         genderSet.add(gender);
@@ -30,9 +33,12 @@ export class SharedService {
     const lowerCaseQuery = query.toLowerCase();
     return mediaList.filter(media => {
         // Verifica si 'genderLists' existe y tiene valores, sino regresa un array vacío
-        const ArrayGenders: any[] = media?.genderLists?.$values || [];
-        const Title: string = media.title ? media.title.toLowerCase() : '';
-        const Overview: string = media?.overview ? media.overview.toLowerCase() : '';
+        let ArrayGenders: any[] = media?.genderLists?.$values || [];
+        if (media.Genders) {
+          ArrayGenders=media.Genders.split(',');
+        }
+        const Title: string = media.title ? media.title.toLowerCase() : media.Title.toLowerCase();
+        const Overview: string = media?.overview ? media.overview.toLowerCase() : media.Overview.toLowerCase();
         return Title.includes(lowerCaseQuery) ||
                Overview.includes(lowerCaseQuery) ||
                ArrayGenders.some(gender => gender.toLowerCase().includes(lowerCaseQuery));

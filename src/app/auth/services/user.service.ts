@@ -30,7 +30,7 @@ export class UserService {
   async UserLogin(email:string,password:string):Promise<string>{
     const result =firstValueFrom(this.HttpClient.post<LoginResponse>(`${environment.API_URL}user/login`,{email,password})).then((res)=>{
       if(res.user){
-        this.setCurrentUser({Name:res.user.name,Email:res.user.email,FavoritesMediaId:res.user.favoritesMediaId.$values,Id:res.user.id});
+        this.setCurrentUser({Name:res.user.name,Email:res.user.email,FavoritesMediaId:res.user.favoritesMediaId,Id:res.user.id});
         localStorage.setItem('token',res.token);
         return `Bienvenido ${res.user.name}`;
       }
@@ -78,7 +78,7 @@ export class UserService {
       if(!this.currentUserValue.FavoritesMediaId){
         this.currentUserValue.FavoritesMediaId=[];
       }
-      this.currentUserValue.FavoritesMediaId=this.currentUserValue.FavoritesMediaId.filter((id)=>id!==mediaId);
+      this.currentUserValue.FavoritesMediaId=this.currentUserValue.FavoritesMediaId.filter((id)=>parseInt(id)!==mediaId);
     }
   }
 }
